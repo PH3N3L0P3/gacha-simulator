@@ -189,28 +189,36 @@
         <div class="rate-box ssr">
           <div class="rate-label">SSR</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-ssr',-0.1)">−</button>
             <input class="rate-input" type="number" id="rate-ssr" value="1" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:64px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-ssr',0.1)">＋</button>
           </div>
           <div class="rate-pct">% chance</div>
         </div>
         <div class="rate-box sr">
           <div class="rate-label">SR</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-sr',-1)">−</button>
             <input class="rate-input" type="number" id="rate-sr" value="9" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:64px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-sr',1)">＋</button>
           </div>
           <div class="rate-pct">% chance</div>
         </div>
         <div class="rate-box r">
           <div class="rate-label">R</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-r',-1)">−</button>
             <input class="rate-input" type="number" id="rate-r" value="30" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:64px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-r',1)">＋</button>
           </div>
           <div class="rate-pct">% chance</div>
         </div>
         <div class="rate-box n">
           <div class="rate-label">N</div>
           <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-n',-1)">−</button>
             <input class="rate-input" type="number" id="rate-n" value="60" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:64px;">
+            <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;" onclick="stepRate('rate-n',1)">＋</button>
           </div>
           <div class="rate-pct">% chance</div>
         </div>
@@ -224,13 +232,17 @@
       <div class="input-row">
         <label>จำนวนการสุ่ม (Rolls)</label>
         <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',-10)">−</button>
           <input type="number" id="sim-rolls" value="100" min="1">
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',10)">＋</button>
         </div>
       </div>
       <div class="input-row" style="margin-bottom:0;">
         <label>ราคาต่อครั้ง (บาท)</label>
         <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepVal('sim-price',-5)">−</button>
           <input type="number" id="sim-price" value="30" min="0">
+          <button class="stepper-btn" onclick="stepVal('sim-price',5)">＋</button>
         </div>
       </div>
 
@@ -249,7 +261,9 @@
           <div style="flex:1;min-width:120px;">
             <label>รับประกัน SSR ทุก X rolls</label>
             <div class="num-stepper">
+              <button class="stepper-btn" onclick="stepVal('pity-count',-1)">−</button>
               <input type="number" id="pity-count" value="90" min="1" max="999">
+              <button class="stepper-btn" onclick="stepVal('pity-count',1)">＋</button>
             </div>
           </div>
           <div style="flex:1;min-width:140px;">
