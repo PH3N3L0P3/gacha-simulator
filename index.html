@@ -173,6 +173,18 @@ input[type="number"]{
     -moz-appearance:textfield;
 }
   
+.section-header{
+  margin:32px 0 20px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+}
+
+.section-header h2{
+  color:var(--gold);
+  margin-bottom:4px;
+}
+
+  
 </style>
 </head>
 <body>
@@ -181,7 +193,7 @@ input[type="number"]{
   <div class="header-icon">⚔️</div>
   <div>
     <div class="header-title">Gacha Drop Rate Simulator</div>
-    <div class="header-sub">Cabal Online · Thailand Game Planner Tool</div>
+    <div class="header-sub">Setup Simulation · Player POV · Summary</div>
   </div>
 </div>
 
@@ -378,9 +390,12 @@ input[type="number"]{
       </div>
     </div>
   </div>
-  
-<!-- ════ TAB: PLAYER POV ════ -->
-<div id="tab-player" class="tab-content">
+  <!-- ════ TAB: PLAYER POV ════ -->
+   <div class="section-header">
+  <h2>🎮 Player POV Simulation</h2>
+  <p>จำลองผลลัพธ์จากงบประมาณของผู้เล่น</p>
+</div>
+    
   <div class="grid2" style="margin-bottom:20px;">
     <div class="card">
       <div class="card-title">🎁 Free Roll Rule</div>
@@ -483,7 +498,7 @@ input[type="number"]{
   </div>
 </div>
 
-</div>
+
 
 <!-- ════ TAB: SUMMARY ════ -->
 <div id="tab-summary" class="tab-content">
