@@ -3,198 +3,264 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gacha Drop Rate Simulator</title>
+<title>⚔️ Gacha Drop Rate Simulator</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800;900&display=swap');
-:root{
-  --bg:#0a0c10;--bg2:#0f1218;--bg3:#141820;--panel:#1a1f2e;--panel2:#1f2535;
-  --border:#2a3048;--border2:#3a4060;
-  --gold:#e8c84a;--gold2:#f5d878;--gold-dim:#6e5a1a;
-  --purple:#9b59d0;--blue:#4a9eff;--blue2:#7abbff;
-  --green:#2ecc71;--red:#e74c3c;
-  --text:#c8d0e8;--text2:#8892b0;--text3:#5a6480;
-  --ssrC:#e8c84a;--srC:#9b59d0;--rC:#4a9eff;--nC:#8892b0;
-  --radius:8px;--radius2:12px;--glow-gold:0 0 20px rgba(232,200,74,0.3);
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Sans Thai',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6;}
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-input[type="number"]{appearance:textfield;-moz-appearance:textfield;}
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap');
+  :root {
+    --bg:#0a0c10;--bg2:#0f1218;--bg3:#141820;--panel:#1a1f2e;--panel2:#1f2535;
+    --border:#2a3048;--border2:#3a4060;--gold:#e8c84a;--gold2:#f5d878;--gold-dim:#6e5a1a;
+    --purple:#9b59d0;--blue:#4a9eff;--blue2:#7abbff;
+    --green:#2ecc71;--red:#e74c3c;--text:#c8d0e8;--text2:#8892b0;--text3:#5a6480;
+    --ssrColor:#e8c84a;--srColor:#9b59d0;--rColor:#4a9eff;--nColor:#8892b0;
+    --radius:8px;--radius2:12px;--glow-gold:0 0 20px rgba(232,200,74,0.3);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans Thai',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.5;}
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  input[type="number"]{appearance:textfield;-moz-appearance:textfield;}
 
-/* HEADER */
-.header{background:linear-gradient(135deg,#0f1218,#1a1420,#0f1218);border-bottom:1px solid var(--gold-dim);padding:22px 24px;text-align:center;position:relative;overflow:hidden;}
-.header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);}
-.header h1{font-size:26px;font-weight:900;color:var(--gold);text-shadow:var(--glow-gold);letter-spacing:2px;margin-bottom:4px;}
-.header p{font-size:12px;color:var(--text3);letter-spacing:1px;}
+  /* HEADER */
+  .header{background:linear-gradient(135deg,#0f1218,#1a1420,#0f1218);border-bottom:1px solid var(--gold-dim);padding:20px 24px;text-align:center;position:relative;overflow:hidden;}
+  .header::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold2),var(--gold),transparent);}
+  .header h1{font-size:26px;font-weight:900;color:var(--gold);text-shadow:var(--glow-gold);letter-spacing:2px;margin-bottom:4px;}
+  .header p{font-size:12px;color:var(--text3);letter-spacing:1px;}
 
-/* PAGE */
-.page{max-width:900px;margin:0 auto;padding:20px 16px;}
-.card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;margin-bottom:18px;}
-.card-title{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;justify-content:space-between;}
-.card-title-left{display:flex;align-items:center;gap:6px;}
+  /* PAGE */
+  .page{max-width:920px;margin:0 auto;padding:24px 16px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;margin-bottom:20px;}
+  .card-title{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .card-title-left{display:flex;align-items:center;gap:6px;}
 
-/* GRID */
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
-@media(max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr 1fr;}}
-@media(max-width:400px){.grid2{grid-template-columns:1fr;}}
+  /* GRID */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  @media(max-width:640px){.grid2,.grid3,.grid4{grid-template-columns:1fr 1fr;}}
 
-/* INPUTS */
-label{font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
-input[type=number],input[type=text],select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:14px;transition:border-color .2s;}
-input:focus,select:focus{outline:none;border-color:var(--gold);}
-.input-row{margin-bottom:12px;}
+  /* LABEL */
+  label{font-size:11px;font-weight:600;color:var(--text2);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;}
 
-/* RATE BOXES */
-.rate-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px 8px;text-align:center;}
-.rate-box.ssr{border-color:var(--ssrC);}
-.rate-box.sr{border-color:var(--srC);}
-.rate-box.r{border-color:var(--rC);}
-.rate-label{font-size:12px;font-weight:700;margin-bottom:6px;}
-.rate-box.ssr .rate-label{color:var(--ssrC);}.rate-box.sr .rate-label{color:var(--srC);}.rate-box.r .rate-label{color:var(--rC);}.rate-box.n .rate-label{color:var(--nC);}
-.rate-input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);text-align:center;font-size:22px;font-weight:800;color:var(--text);font-family:'Noto Sans Thai',sans-serif;padding:2px;}
-.rate-input:focus{outline:none;border-bottom-color:var(--gold);}
-.rate-pct{font-size:11px;color:var(--text3);margin-top:3px;}
-.rate-total{padding:7px 12px;border-radius:var(--radius);font-size:13px;font-weight:700;text-align:right;margin-top:8px;}
-.rate-total.ok{background:rgba(46,204,113,.1);color:var(--green);border:1px solid rgba(46,204,113,.25);}
-.rate-total.warn{background:rgba(231,76,60,.1);color:var(--red);border:1px solid rgba(231,76,60,.25);}
+  /* NUM STEPPER — inline − [n] + */
+  .num-stepper{display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+  .num-stepper input[type=number]{border:none;border-radius:0;text-align:center;flex:1;min-width:0;background:var(--bg3);color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:14px;padding:9px 4px;}
+  .num-stepper input[type=number]:focus{outline:none;background:var(--bg2);}
+  .stepper-btn{font-size:18px;font-weight:700;width:36px;height:38px;flex-shrink:0;background:var(--panel2);border:none;color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+  .stepper-btn:hover{background:var(--gold-dim);color:var(--gold2);}
 
-/* TOGGLE */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:border-color .2s;}
-.toggle-row:hover{border-color:var(--border2);}
-.toggle-info{font-size:13px;font-weight:600;color:var(--text);}
-.toggle-sub{font-size:11px;color:var(--text3);margin-top:1px;}
-.tog{position:relative;width:40px;height:22px;flex-shrink:0;}
-.tog input{opacity:0;width:0;height:0;}
-.tslider{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--border);border-radius:11px;cursor:pointer;transition:.2s;}
-.tslider::before{content:'';position:absolute;width:16px;height:16px;left:2px;top:2px;background:var(--text3);border-radius:50%;transition:.2s;}
-.tog input:checked+.tslider{background:rgba(232,200,74,.2);border-color:var(--gold);}
-.tog input:checked+.tslider::before{transform:translateX(18px);background:var(--gold);}
-.expand-box{margin-top:10px;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:none;}
-.expand-box.show{display:block;}
-.expand-note{font-size:12px;color:var(--text3);margin-top:8px;padding:8px 10px;background:rgba(232,200,74,.05);border-left:2px solid var(--gold-dim);border-radius:0 4px 4px 0;}
+  /* RATE BOXES */
+  .rate-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px 8px;text-align:center;}
+  .rate-box.ssr{border-color:var(--ssrColor);}
+  .rate-box.sr{border-color:var(--srColor);}
+  .rate-box.r{border-color:var(--rColor);}
+  .rate-label{font-size:13px;font-weight:700;margin-bottom:8px;}
+  .rate-box.ssr .rate-label{color:var(--ssrColor);}
+  .rate-box.sr .rate-label{color:var(--srColor);}
+  .rate-box.r .rate-label{color:var(--rColor);}
+  .rate-box.n .rate-label{color:var(--nColor);}
+  .rate-input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--border);text-align:center;font-size:22px;font-weight:800;color:var(--text);font-family:'Noto Sans Thai',sans-serif;padding:4px;margin-bottom:2px;}
+  .rate-input:focus{outline:none;border-bottom-color:var(--gold);}
+  .rate-pct{font-size:11px;color:var(--text3);margin-top:4px;}
+  .rate-total{margin-top:12px;padding:10px 16px;border-radius:var(--radius);font-weight:700;text-align:center;font-size:15px;transition:all .2s;}
+  .rate-total.ok{background:rgba(46,204,113,.12);color:var(--green);border:1px solid rgba(46,204,113,.3);}
+  .rate-total.warn{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.3);}
 
-/* BUTTONS */
-.btn{font-family:'Noto Sans Thai',sans-serif;font-weight:700;font-size:13px;padding:8px 16px;border:none;border-radius:var(--radius);cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap;}
-.btn-gold{background:linear-gradient(135deg,var(--gold-dim),#8a6e20);color:var(--gold2);border:1px solid var(--gold-dim);}
-.btn-gold:hover{background:linear-gradient(135deg,#8a6e20,var(--gold));color:#000;box-shadow:var(--glow-gold);}
-.btn-gold:disabled{opacity:.4;cursor:not-allowed;}
-.btn-primary{background:linear-gradient(135deg,#1a2a50,#2a3a70);color:var(--blue2);border:1px solid #2a3a70;}
-.btn-primary:hover{background:linear-gradient(135deg,#2a3a70,var(--blue));color:#fff;}
-.btn-danger{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.25);}
-.btn-danger:hover{background:rgba(231,76,60,.25);}
-.btn-success{background:rgba(46,204,113,.12);color:var(--green);border:1px solid rgba(46,204,113,.25);}
-.btn-success:hover{background:rgba(46,204,113,.25);}
-.btn-sm{padding:5px 10px;font-size:11px;}
-.btn-xs{padding:3px 8px;font-size:11px;}
-.btn-group{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
-.run-bar{display:flex;gap:10px;align-items:stretch;margin-bottom:18px;flex-wrap:wrap;}
-.run-bar .btn-run{flex:1;min-width:160px;font-size:15px;padding:13px;justify-content:center;}
+  /* PITY TOGGLE */
+  .pity-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);}
+  .pity-info .pi-title{font-size:13px;font-weight:600;color:var(--text);}
+  .pity-info .pi-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+  .toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
+  .toggle input{opacity:0;width:0;height:0;}
+  .toggle-slider{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:.25s;}
+  .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:2px;top:2px;background:var(--text3);border-radius:50%;transition:.25s;}
+  .toggle input:checked+.toggle-slider{background:rgba(232,200,74,.2);border-color:var(--gold);}
+  .toggle input:checked+.toggle-slider::before{transform:translateX(20px);background:var(--gold);}
+  .pity-expand{margin-top:10px;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);display:none;}
+  .pity-expand.show{display:block;}
+  .pity-note{font-size:12px;color:var(--text3);margin-top:8px;line-height:1.6;}
 
-/* ALERTS */
-.alert{padding:10px 14px;border-radius:var(--radius);font-size:13px;display:none;margin-bottom:10px;}
-.alert.show{display:block;}
-.alert-err{background:rgba(231,76,60,.1);color:var(--red);border:1px solid rgba(231,76,60,.25);}
-.alert-warn{background:rgba(243,156,18,.1);color:#f39c12;border:1px solid rgba(243,156,18,.25);}
+  /* FREE ROLL TOGGLE */
+  .free-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;}
+  .free-expand{padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;display:none;}
+  .free-expand.show{display:block;}
+  .free-note{font-size:12px;color:var(--text3);margin-top:8px;padding:8px 10px;background:rgba(232,200,74,.05);border-left:2px solid var(--gold-dim);border-radius:0 4px 4px 0;}
 
-/* BADGES */
-.rb{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;}
-.rb.SSR{background:rgba(232,200,74,.15);color:var(--ssrC);border:1px solid rgba(232,200,74,.3);}
-.rb.SR{background:rgba(155,89,208,.15);color:var(--srC);border:1px solid rgba(155,89,208,.3);}
-.rb.R{background:rgba(74,158,255,.15);color:var(--rC);border:1px solid rgba(74,158,255,.3);}
-.rb.N{background:rgba(136,146,176,.1);color:var(--nC);border:1px solid rgba(136,146,176,.2);}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;flex-shrink:0;}
-.dot.SSR{background:var(--ssrC);}.dot.SR{background:var(--srC);}.dot.R{background:var(--rC);}.dot.N{background:var(--nC);}
-.pity-badge{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:rgba(74,158,255,.12);color:var(--blue2);border:1px solid rgba(74,158,255,.25);margin-left:4px;}
-.pity-badge.off{background:rgba(90,100,128,.1);color:var(--text3);border-color:var(--border);}
+  /* TABLE HEADERS — dark rounded */
+  .t-head-dark th{background:var(--bg2);color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;padding:9px 10px;font-weight:700;border-bottom:1px solid var(--border);}
+  .t-head-dark th:first-child{border-radius:var(--radius) 0 0 0;}
+  .t-head-dark th:last-child{border-radius:0 var(--radius) 0 0;}
 
-/* RESULT CARDS */
-.result-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
-@media(max-width:600px){.result-cards{grid-template-columns:1fr 1fr;}}
-.rc{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 10px;text-align:center;}
-.rc.hl{border-color:var(--gold-dim);background:rgba(232,200,74,.04);}
-.rc-val{font-size:22px;font-weight:900;color:var(--text);}
-.rc-val.gold{color:var(--ssrC);}
-.rc-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+  /* POOL FORM — equal height */
+  .pool-add-form{display:grid;grid-template-columns:1fr 120px auto auto;gap:8px;align-items:end;margin-bottom:12px;}
+  .pool-add-form input,.pool-add-form select{height:40px;padding:0 12px;}
+  .pool-add-form .btn{height:40px;padding:0 16px;}
+  input[type=text]{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:14px;}
+  input[type=text]:focus{outline:none;border-color:var(--gold);}
+  select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:9px 12px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:14px;}
+  select:focus{outline:none;border-color:var(--gold);}
+  .pool-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-height:260px;overflow-y:auto;}
+  .pool-wrap::-webkit-scrollbar{width:4px;}
+  .pool-wrap::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+  .pool-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .pool-table th{background:var(--bg3);color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-weight:600;}
+  .pool-table td{padding:7px 10px;border-bottom:1px solid rgba(42,48,72,.35);vertical-align:middle;}
+  .pool-table tr:last-child td{border-bottom:none;}
+  .pool-table tr:hover td{background:rgba(255,255,255,.02);}
+  .pi-name{width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:13px;padding:2px 4px;transition:border-color .15s;}
+  .pi-name:focus{outline:none;border-bottom-color:var(--gold);}
+  .pi-rar{background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:12px;padding:5px 8px;cursor:pointer;}
+  .pi-rar:focus{outline:none;border-color:var(--gold);}
+  .pi-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 6px;transition:color .15s;}
+  .pi-del:hover{color:var(--red);}
+  .pool-count{font-size:11px;color:var(--text3);margin-top:6px;}
 
-/* INSIGHT */
-.insight-box{background:linear-gradient(135deg,rgba(232,200,74,.05),rgba(155,89,208,.05));border:1px solid var(--border2);border-radius:var(--radius2);padding:14px 16px;font-size:13px;line-height:1.8;color:var(--text);margin-bottom:18px;}
-.insight-warn-line{background:rgba(243,156,18,.08);border:1px solid rgba(243,156,18,.25);border-radius:6px;padding:8px 12px;font-size:12px;color:#f39c12;margin-top:8px;display:flex;align-items:flex-start;gap:6px;}
+  /* DOTS & BADGES */
+  .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;flex-shrink:0;}
+  .dot.SSR{background:var(--ssrColor);}.dot.SR{background:var(--srColor);}.dot.R{background:var(--rColor);}.dot.N{background:var(--nColor);}
+  .rb{display:inline-flex;align-items:center;font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;}
+  .rb.SSR{background:rgba(232,200,74,.15);color:var(--ssrColor);border:1px solid rgba(232,200,74,.3);}
+  .rb.SR{background:rgba(155,89,208,.15);color:var(--srColor);border:1px solid rgba(155,89,208,.3);}
+  .rb.R{background:rgba(74,158,255,.15);color:var(--rColor);border:1px solid rgba(74,158,255,.3);}
+  .rb.N{background:rgba(136,146,176,.1);color:var(--nColor);border:1px solid rgba(136,146,176,.2);}
 
-/* TABLES */
-.t{width:100%;border-collapse:collapse;font-size:13px;}
-.t th{background:var(--bg3);color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.4px;padding:8px 10px;border-bottom:1px solid var(--border);font-weight:600;}
-.t td{padding:8px 10px;border-bottom:1px solid rgba(42,48,72,.3);vertical-align:middle;}
-.t tr:last-child td{border-bottom:none;}
-.t tr:hover td{background:rgba(255,255,255,.02);}
-.t th.r,.t td.r{text-align:right;font-variant-numeric:tabular-nums;}
-.t th.c,.t td.c{text-align:center;}
-.diff-pos{color:var(--green);font-weight:700;}
-.diff-neg{color:var(--red);font-weight:700;}
-.diff-zero{color:var(--text3);}
-.tbl-wrap{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.tbl-scroll{max-height:240px;overflow-y:auto;}
-.tbl-scroll::-webkit-scrollbar{width:4px;}
-.tbl-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
+  /* BUTTONS */
+  .btn{font-family:'Noto Sans Thai',sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border:none;border-radius:var(--radius);cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .2s;white-space:nowrap;}
+  .btn-gold{background:linear-gradient(135deg,var(--gold-dim),#8a6e20);color:var(--gold2);border:1px solid var(--gold-dim);}
+  .btn-gold:hover{background:linear-gradient(135deg,#8a6e20,var(--gold));color:#000;box-shadow:var(--glow-gold);}
+  .btn-gold:disabled{opacity:.4;cursor:not-allowed;}
+  .btn-success{background:rgba(46,204,113,.15);color:var(--green);border:1px solid rgba(46,204,113,.3);}
+  .btn-success:hover{background:rgba(46,204,113,.3);}
+  .btn-danger{background:rgba(231,76,60,.15);color:var(--red);border:1px solid rgba(231,76,60,.3);}
+  .btn-danger:hover{background:rgba(231,76,60,.3);}
+  .btn-primary{background:linear-gradient(135deg,#1a2a50,#2a3a70);color:var(--blue2);border:1px solid #2a3a70;}
+  .btn-primary:hover{background:linear-gradient(135deg,#2a3a70,var(--blue));color:#fff;}
+  .btn-sm{padding:5px 10px;font-size:11px;}
+  .run-bar{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+  .btn-run{flex:1;min-width:160px;font-size:15px;padding:13px;justify-content:center;}
 
-/* GRAPH BARS */
-.g-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.g-lbl{width:38px;flex-shrink:0;}
-.g-wrap{flex:1;background:var(--bg3);border-radius:3px;height:22px;overflow:hidden;}
-.g-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:rgba(0,0,0,.8);white-space:nowrap;transition:width .5s ease;}
-.g-num{width:100px;text-align:right;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;}
-.bar-ssr{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
-.bar-sr{background:linear-gradient(90deg,#5a2090,var(--purple));}
-.bar-r{background:linear-gradient(90deg,#1a4080,var(--blue));}
-.bar-n{background:linear-gradient(90deg,#3a4060,#6a7090);}
-.bar-green{background:linear-gradient(90deg,#1a6030,var(--green));}
-.bar-red{background:linear-gradient(90deg,#6a1010,var(--red));}
+  /* ALERTS */
+  .alert{padding:10px 14px;border-radius:var(--radius);font-size:13px;display:none;margin-bottom:10px;}
+  .alert.show{display:block;}
+  .alert-err{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.3);}
+  .alert-warn{background:rgba(243,156,18,.12);color:#f39c12;border:1px solid rgba(243,156,18,.3);}
 
-/* MINI BAR */
-.mini-bar-wrap{width:60px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:6px;}
-.mini-bar{height:100%;border-radius:3px;}
+  /* RESULT CARDS */
+  .result-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+  @media(max-width:640px){.result-cards{grid-template-columns:repeat(3,1fr);}}
+  @media(max-width:600px){.result-cards{grid-template-columns:1fr 1fr;}}
+  .rc{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:14px 10px;text-align:center;}
+  .rc.hl{border-color:var(--gold-dim);background:rgba(232,200,74,.04);}
+  .rc-val{font-size:22px;font-weight:900;color:var(--text);}
+  .rc-val.gold{color:var(--ssrColor);}
+  .rc-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 
-/* PROGRESS */
-.mc-wrap{margin-bottom:14px;}
-.mc-bar-wrap{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
-.mc-bar{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));border-radius:3px;transition:width .1s;}
-.mc-txt{font-size:11px;color:var(--text3);margin-top:4px;}
+  /* INSIGHT */
+  .insight-box{background:linear-gradient(135deg,rgba(232,200,74,.05),rgba(155,89,208,.05));border:1px solid var(--border2);border-radius:var(--radius2);padding:14px 16px;font-size:13px;line-height:1.8;color:var(--text);margin-bottom:20px;}
+  .insight-warn-line{background:rgba(243,156,18,.08);border:1px solid rgba(243,156,18,.25);border-radius:6px;padding:8px 12px;font-size:12px;color:#f39c12;margin-top:8px;display:flex;align-items:flex-start;gap:6px;}
 
-/* POV BIG */
-.pov-big-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
-.pov-big{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;text-align:center;}
-.pov-big-val{font-size:42px;font-weight:900;}
-.pov-big-val.green{color:var(--green);}
-.pov-big-val.red{color:var(--red);}
-.pov-big-lbl{font-size:12px;color:var(--text3);margin-top:4px;}
-.pov-big-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+  /* RESULT PANELS */
+  .result-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;align-items:stretch;}
+  @media(max-width:700px){.result-row{grid-template-columns:1fr;}}
+  .result-row .card{margin-bottom:0;display:flex;flex-direction:column;}
 
-/* POOL FORM */
-.add-form{display:flex;gap:8px;align-items:flex-end;margin-bottom:10px;flex-wrap:wrap;}
-.add-form .af-name{flex:1;min-width:120px;}
-.add-form .af-rar{width:100px;}
+  /* GRAPH */
+  .g-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .g-lbl{width:36px;flex-shrink:0;}
+  .g-wrap{flex:1;background:var(--bg3);border-radius:3px;height:22px;overflow:hidden;}
+  .g-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:rgba(0,0,0,.8);white-space:nowrap;transition:width .5s ease;}
+  .g-num{width:80px;text-align:right;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;}
 
-/* SECTION SEP */
-hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px;}
+  ::-webkit-scrollbar-track{background:var(--bg2);border-radius:6px;}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:6px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold-dim);}
+  * {scrollbar-width:thin;scrollbar-color:var(--border2) var(--bg2);}
+  .bar-ssr{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+  .bar-sr{background:linear-gradient(90deg,#5a2090,var(--purple));}
+  .bar-r{background:linear-gradient(90deg,#1a4080,var(--blue));}
+  .bar-n{background:linear-gradient(90deg,#3a4060,#6a7090);}
+  .bar-green{background:linear-gradient(90deg,#1a6030,var(--green));}
+  .bar-red{background:linear-gradient(90deg,#6a1010,var(--red));}
 
-/* SUMMARY ROW */
-.summary-kv{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(42,48,72,.3);}
-.summary-kv:last-child{border-bottom:none;}
-.summary-kv .sk{font-size:12px;color:var(--text2);}
-.summary-kv .sv{font-size:13px;font-weight:600;color:var(--text);}
+  /* COST SUMMARY */
+  .cost-body{flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;}
+  .cost-kv{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);}
+  .cost-kv .ck-l{font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;font-weight:600;}
+  .cost-kv .ck-v{font-size:14px;font-weight:700;color:var(--text);}
+  .cost-total{padding:16px;background:rgba(232,200,74,.06);border:1px solid var(--gold-dim);border-radius:var(--radius2);text-align:center;}
+  .cost-total-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+  .cost-total-val{font-size:28px;font-weight:900;color:var(--gold2);}
 
-/* BREAKDOWN BOXES */
-.bd-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
-.bd-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center;}
-.bd-val{font-size:20px;font-weight:800;}
-.bd-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+  /* RVA TABLE */
+  .rva-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .rva-table th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--text3);padding:7px 10px;border-bottom:1px solid var(--border);font-weight:600;}
+  .rva-table th:first-child{text-align:left;}
+  .rva-table th:not(:first-child){text-align:right;}
+  .rva-table td{padding:9px 10px;border-bottom:1px solid rgba(42,48,72,.3);vertical-align:middle;}
+  .rva-table td:first-child{text-align:left;}
+  .rva-table td:not(:first-child){text-align:right;font-weight:600;font-variant-numeric:tabular-nums;}
+  .rva-table tr:last-child td{border-bottom:none;}
+  .rva-table tr:hover td{background:rgba(255,255,255,.02);}
+  .diff-pos{color:var(--green);}
+  .diff-neg{color:var(--red);}
+  .diff-zero{color:var(--text3);}
+
+  /* ITEM TABLE */
+  .ir-table{width:100%;border-collapse:collapse;font-size:13px;}
+  .ir-table th{font-size:11px;text-transform:uppercase;letter-spacing:.4px;color:var(--text3);padding:7px 12px;border-bottom:1px solid var(--border);font-weight:600;background:var(--bg3);}
+  .ir-table th:first-child{text-align:left;}
+  .ir-table th:nth-child(2){text-align:center;}
+  .ir-table th:last-child{text-align:right;}
+  .ir-table td{padding:8px 12px;border-bottom:1px solid rgba(42,48,72,.3);vertical-align:middle;}
+  .ir-table td:nth-child(2){text-align:center;}
+  .ir-table td:last-child{text-align:right;font-weight:800;font-size:15px;}
+  .ir-table tr:last-child td{border-bottom:none;}
+  .ir-table tr:hover td{background:rgba(255,255,255,.02);}
+
+  /* POV BIG */
+  .pov-big-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+  .pov-big{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius2);padding:20px;text-align:center;}
+  .pov-big-val{font-size:44px;font-weight:900;}
+  .pov-big-val.green{color:var(--green);}
+  .pov-big-val.red{color:var(--red);}
+  .pov-big-lbl{font-size:12px;color:var(--text3);margin-top:4px;}
+  .pov-big-sub{font-size:11px;color:var(--text3);margin-top:2px;}
+
+  /* BREAKDOWN BOXES */
+  .bd-boxes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;}
+  .bd-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center;}
+  .bd-val{font-size:24px;font-weight:900;}
+  .bd-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;margin-top:2px;}
+
+  /* MONTE CARLO SUMMARY */
+  .mc-kv{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(42,48,72,.3);}
+  .mc-kv:last-child{border-bottom:none;}
+  .mc-kv .mk{font-size:13px;color:var(--text2);}
+  .mc-kv .mv{font-size:13px;font-weight:600;color:var(--text);}
+
+  /* SSR DIST */
+  .dist-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .dist-lbl{width:55px;text-align:right;font-size:12px;color:var(--text2);flex-shrink:0;}
+  .dist-wrap{flex:1;background:var(--bg3);border-radius:3px;height:22px;overflow:hidden;}
+  .dist-bar{height:100%;border-radius:3px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:rgba(0,0,0,.8);white-space:nowrap;}
+  .dist-num{width:90px;text-align:right;font-size:12px;color:var(--text2);flex-shrink:0;font-weight:600;}
+
+  /* PROGRESS */
+  .mc-progress{margin:12px 0;}
+  .mc-progress-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+  .mc-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));border-radius:3px;transition:width .1s;}
+  .mc-progress-text{font-size:11px;color:var(--text3);margin-top:4px;}
+
+  /* SEP */
+  hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
+
+  /* PITY BADGE */
+  .pity-badge{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:rgba(74,158,255,.12);color:var(--blue2);border:1px solid rgba(74,158,255,.25);margin-left:4px;}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <h1>⚔️ Gacha Drop Rate Simulator</h1>
   <p>Setup • Player POV • Summary</p>
@@ -202,251 +268,322 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
 
 <div class="page">
 
-<!-- ══ SINGLE SIMULATION — ROLL SETTINGS ══ -->
-<div class="card">
-  <div class="card-title"><span class="card-title-left">🎲 Single Simulation — Roll Settings</span></div>
-  <div class="grid2">
-    <div class="input-row">
-      <label>จำนวนครั้งที่สุ่ม</label>
-      <div class="num-stepper">
-        <button class="stepper-btn" onclick="stepVal('sim-rolls',-1)">−</button>
-        <input type="number" id="sim-rolls" value="100" min="1">
-        <button class="stepper-btn" onclick="stepVal('sim-rolls',1)">＋</button>
+  <!-- ══ ROLL SETTINGS ══ -->
+  <div class="card">
+    <div class="card-title"><span class="card-title-left">🎲 Single Simulation — Roll Settings</span></div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div>
+        <label>จำนวนครั้งที่สุ่ม</label>
+        <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',-1)">−</button>
+          <input type="number" id="sim-rolls" value="100" min="1">
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',1)">＋</button>
+        </div>
+      </div>
+      <div>
+        <label>ราคาต่อครั้ง (บาท)</label>
+        <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepVal('sim-price',-1)">−</button>
+          <input type="number" id="sim-price" value="30" min="0">
+          <button class="stepper-btn" onclick="stepVal('sim-price',1)">＋</button>
+        </div>
       </div>
     </div>
-    <div class="input-row">
-      <label>ราคาต่อครั้ง (บาท)</label>
-      <div class="num-stepper">
-        <button class="stepper-btn" onclick="stepVal('sim-price',-1)">−</button>
-        <input type="number" id="sim-price" value="30" min="0">
-        <button class="stepper-btn" onclick="stepVal('sim-price',1)">＋</button>
+    <!-- Pity -->
+    <div class="pity-row">
+      <div class="pity-info">
+        <div class="pi-title">🛡️ Pity System</div>
+        <div class="pi-sub" id="pity-sub">รับประกัน SSR หากสุ่ม 90 ครั้งติดต่อกันไม่ได้ SSR</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="pity-toggle" onchange="togglePity()"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="pity-expand" id="pity-expand">
+      <label>รับประกัน SSR ทุก <span id="pity-x-lbl">90</span> ครั้ง</label>
+      <div class="num-stepper" style="margin-top:4px;">
+        <button class="stepper-btn" onclick="stepVal('pity-count',-1);updatePityNote()">−</button>
+        <input type="number" id="pity-count" value="90" min="1" max="999" oninput="updatePityNote()">
+        <button class="stepper-btn" onclick="stepVal('pity-count',1);updatePityNote()">＋</button>
+      </div>
+      <div class="pity-note" id="pity-note">🔒 ครั้งที่ <b>90</b> จะได้ SSR เสมอ หากยังไม่ได้ SSR ก่อนหน้า</div>
+    </div>
+  </div>
+
+  <!-- ══ RATE SETTINGS ══ -->
+  <div class="card">
+    <div class="card-title">
+      <span class="card-title-left">🎯 Rate Settings</span>
+      <span id="rate-total" class="rate-total ok" style="margin:0;padding:5px 12px;font-size:12px;">✅ รวม: 100.00%</span>
+    </div>
+    <div class="grid4">
+      <div class="rate-box ssr">
+        <div class="rate-label">SSR</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-ssr',-1)">−</button>
+          <input class="rate-input" type="number" id="rate-ssr" value="1" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:60px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-ssr',1)">＋</button>
+        </div>
+        <div class="rate-pct">%</div>
+      </div>
+      <div class="rate-box sr">
+        <div class="rate-label">SR</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-sr',-1)">−</button>
+          <input class="rate-input" type="number" id="rate-sr" value="9" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:60px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-sr',1)">＋</button>
+        </div>
+        <div class="rate-pct">%</div>
+      </div>
+      <div class="rate-box r">
+        <div class="rate-label">R</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-r',-1)">−</button>
+          <input class="rate-input" type="number" id="rate-r" value="30" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:60px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-r',1)">＋</button>
+        </div>
+        <div class="rate-pct">%</div>
+      </div>
+      <div class="rate-box n">
+        <div class="rate-label">N</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:4px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-n',-1)">−</button>
+          <input class="rate-input" type="number" id="rate-n" value="60" min="0" max="100" step="0.01" oninput="updateRateTotal()" style="width:60px;">
+          <button class="stepper-btn" style="width:26px;height:30px;font-size:13px;border-radius:6px;" onclick="stepRate('rate-n',1)">＋</button>
+        </div>
+        <div class="rate-pct">%</div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- ══ RATE SETTINGS ══ -->
-<div class="card">
-  <div class="card-title"><span class="card-title-left">🎯 Rate Settings</span><span id="rate-total" class="rate-total ok">✅ รวม: 100.00%</span></div>
-  <div class="grid4">
-    <div class="rate-box ssr"><div class="rate-label">SSR</div><input class="rate-input" type="number" id="rate-ssr" value="1" min="0" max="100" step="0.01" oninput="updateRateTotal()"><div class="rate-pct">%</div></div>
-    <div class="rate-box sr"><div class="rate-label">SR</div><input class="rate-input" type="number" id="rate-sr" value="9" min="0" max="100" step="0.01" oninput="updateRateTotal()"><div class="rate-pct">%</div></div>
-    <div class="rate-box r"><div class="rate-label">R</div><input class="rate-input" type="number" id="rate-r" value="30" min="0" max="100" step="0.01" oninput="updateRateTotal()"><div class="rate-pct">%</div></div>
-    <div class="rate-box n"><div class="rate-label">N</div><input class="rate-input" type="number" id="rate-n" value="60" min="0" max="100" step="0.01" oninput="updateRateTotal()"><div class="rate-pct">%</div></div>
-  </div>
-</div>
-
-<!-- ══ ITEM POOL ══ -->
-<div class="card">
-  <div class="card-title"><span class="card-title-left">📦 Item Pool</span><button class="btn btn-danger btn-xs" onclick="clearPool()">🗑 Clear All</button></div>
-
-  <!-- Add Form -->
-  <div class="add-form">
-    <div class="af-name input-row" style="margin-bottom:0;">
-      <label>ชื่อ item</label>
-      <input type="text" id="add-name" placeholder="เช่น Dragon Sword…" onkeydown="if(event.key==='Enter')addItem()">
+  <!-- ══ ITEM POOL ══ -->
+  <div class="card">
+    <div class="card-title">
+      <span class="card-title-left">🎮 Item Pool</span>
+      <button class="btn btn-danger btn-sm" onclick="clearPool()">🗑 Clear All</button>
     </div>
-    <div class="af-rar input-row" style="margin-bottom:0;">
-      <label>Rarity</label>
-      <select id="add-rarity">
-        <option value="SSR">⭐ SSR</option>
-        <option value="SR">SR</option>
-        <option value="R" selected>R</option>
-        <option value="N">N</option>
-      </select>
+    <div class="pool-add-form">
+      <div>
+        <label>ชื่อ Item</label>
+        <input type="text" id="add-name" placeholder="เช่น Dragon Sword…" onkeydown="if(event.key==='Enter')addItem()">
+      </div>
+      <div>
+        <label>Rarity</label>
+        <select id="add-rarity">
+          <option value="SSR">SSR</option>
+          <option value="SR">SR</option>
+          <option value="R" selected>R</option>
+          <option value="N">N</option>
+        </select>
+      </div>
+      <div style="padding-top:19px;">
+        <button class="btn btn-gold" onclick="addItem()">＋ Add Item</button>
+      </div>
+      <div style="padding-top:19px;">
+        <button class="btn btn-primary" onclick="resetDefault()">↺ Default</button>
+      </div>
     </div>
-    <button class="btn btn-gold" onclick="addItem()">＋ Add Item</button>
-    <button class="btn btn-primary btn-sm" onclick="resetDefault()">↺ Default</button>
-  </div>
-
-  <div id="pool-dup-alert" class="alert"></div>
-
-  <div class="tbl-wrap">
-    <div class="tbl-scroll">
-      <table class="t">
-        <thead><tr><th style="width:36px;" class="c">#</th><th>ชื่อไอเทม</th><th style="width:100px;" class="c">ความหายาก</th><th style="width:36px;"></th></tr></thead>
+    <div id="pool-dup-alert" class="alert"></div>
+    <div class="pool-wrap">
+      <table class="pool-table">
+        <thead><tr><th style="width:36px;">#</th><th>ชื่อไอเทม</th><th style="width:110px;">ความหายาก</th><th style="width:32px;"></th></tr></thead>
         <tbody id="pool-tbody"></tbody>
       </table>
     </div>
-  </div>
-  <div class="pool-count" id="pool-count" style="font-size:11px;color:var(--text3);margin-top:6px;"></div>
-</div>
-
-
-
-<div id="run-alert" class="alert"></div>
-<div class="run-bar">
-  <button class="btn btn-gold btn-run" onclick="runSimulation()">⚔️ Start Simulation</button>
-  <button class="btn btn-success" onclick="exportLatestCSV()">📥 Export Latest Pull Result CSV</button>
-  <button class="btn btn-danger btn-sm" onclick="resetSim()">↺ Reset</button>
-</div>
-
-<!-- RESULTS -->
-<div id="sim-results" style="display:none;">
-  <!-- Result Cards -->
-  <div class="result-cards" id="result-cards"></div>
-  <!-- Insight -->
-  <div class="insight-box" id="insight-box"></div>
-
-  <!-- Result row: Rarity Breakdown + Cost Summary -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;align-items:stretch;">
-    <div class="card" style="margin-bottom:0;">
-      <div class="card-title"><span class="card-title-left">📊 Rarity Breakdown</span></div>
-      <div id="sim-graph-inline"></div>
-    </div>
-    <div class="card" style="margin-bottom:0;display:flex;flex-direction:column;">
-      <div class="card-title"><span class="card-title-left">💰 Cost Summary</span></div>
-      <div id="cost-summary-body" style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;"></div>
-    </div>
+    <div class="pool-count" id="pool-count"></div>
   </div>
 
-  <!-- Result row: Rate vs Actual + Item Result -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;align-items:start;">
-    <div class="card" style="margin-bottom:0;">
-      <div class="card-title"><span class="card-title-left">📈 Rate vs Actual</span></div>
-      <table class="t" style="width:100%;">
-        <thead><tr><th style="text-align:left;">Rarity</th><th class="r">Set Rate</th><th class="r">Actual</th><th class="r">Diff</th></tr></thead>
-        <tbody id="result-tbody"></tbody>
-      </table>
-    </div>
-    <div class="card" style="margin-bottom:0;">
-      <div class="card-title"><span class="card-title-left">🏆 Item Result</span></div>
-      <table class="t" style="width:100%;">
-        <thead><tr><th style="text-align:left;">Item</th><th class="c">Rarity</th><th class="r">Count</th></tr></thead>
-        <tbody id="item-tbody"></tbody>
-      </table>
-    </div>
+  <!-- ══ RUN ══ -->
+  <div id="run-alert" class="alert"></div>
+  <div class="run-bar">
+    <button class="btn btn-gold btn-run" onclick="runSimulation()">⚔️ Start Simulation</button>
+    <button class="btn btn-success" onclick="exportLatestCSV()">📥 Export Latest Pull Result CSV</button>
+    <button class="btn btn-danger btn-sm" onclick="resetSim()">↺ Reset</button>
   </div>
-  <!-- Pity summary -->
-  <div id="pity-card" style="display:none;">
+
+  <!-- ══ RESULTS ══ -->
+  <div id="sim-results" style="display:none;">
+    <div class="result-cards" id="result-cards"></div>
+    <div class="insight-box" id="insight-box"></div>
+
+    <div class="result-row">
+      <div class="card">
+        <div class="card-title"><span class="card-title-left">📊 Rarity Breakdown</span></div>
+        <div id="sim-graph"></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-title-left">💰 Cost Summary</span></div>
+        <div class="cost-body" id="cost-body"></div>
+      </div>
+    </div>
+
+    <div class="result-row">
+      <div class="card">
+        <div class="card-title"><span class="card-title-left">📈 Rate vs Actual</span></div>
+        <table class="rva-table">
+          <thead class="t-head-dark"><tr><th>Rarity</th><th>Set Rate</th><th>Actual</th><th>Diff</th></tr></thead>
+          <tbody id="rva-tbody"></tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="card-title-left">🏆 Item Result</span></div>
+        <div style="overflow-y:auto;">
+          <table class="ir-table">
+            <thead class="t-head-dark"><tr><th>Item</th><th>Rarity</th><th>Count</th></tr></thead>
+            <tbody id="ir-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="pity-card" style="display:none;margin-bottom:20px;">
+      <div class="card" style="margin-bottom:0;">
+        <div class="card-title"><span class="card-title-left">🛡️ Pity Summary</span></div>
+        <div id="pity-content"></div>
+      </div>
+    </div>
+
+    <!-- Roll Log -->
     <div class="card">
-      <div class="card-title"><span class="card-title-left">🛡️ Pity Summary</span></div>
-      <div id="pity-content"></div>
-    </div>
-  </div>
-</div>
-
-<hr class="sep">
-
-<!-- ══ PLAYER POV ══ -->
-<div class="card">
-  <div class="card-title"><span class="card-title-left">👤 Player POV — Budget Inputs</span></div>
-  <div class="grid2">
-    <div class="input-row">
-      <label>งบเติมเงิน (บาท)</label>
-      <div class="num-stepper">
-        <button class="stepper-btn" onclick="stepValCb('pov-budget',-500,recalcBD)">−</button>
-        <input type="number" id="pov-budget" value="3000" min="1" oninput="recalcBD()">
-        <button class="stepper-btn" onclick="stepValCb('pov-budget',500,recalcBD)">＋</button>
+      <div class="card-title" style="justify-content:space-between;">
+        <span class="card-title-left">📋 บันทึกการสุ่ม</span>
+        <span id="log-count" style="font-size:11px;color:var(--text3);font-weight:400;"></span>
+      </div>
+      <div style="max-height:240px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius);">
+        <table class="pool-table">
+          <thead class="t-head-dark"><tr><th style="width:70px;">ครั้งที่</th><th style="width:110px;">ความหายาก</th><th>Item Name</th><th style="width:70px;text-align:right;">ราคา</th></tr></thead>
+          <tbody id="log-tbody"></tbody>
+        </table>
       </div>
     </div>
-    <div class="input-row">
-      <label>ราคาต่อ Roll (บาท)</label>
-      <div class="num-stepper">
-        <button class="stepper-btn" onclick="stepValCb('pov-price',-5,recalcBD)">−</button>
-        <input type="number" id="pov-price" value="30" min="1" oninput="recalcBD()">
-        <button class="stepper-btn" onclick="stepValCb('pov-price',5,recalcBD)">＋</button>
+
+    <!-- Sim History -->
+    <div class="card">
+      <div class="card-title" style="justify-content:space-between;">
+        <span class="card-title-left">🕐 ประวัติการจำลอง</span>
+        <span style="font-size:11px;color:var(--text3);font-weight:400;cursor:pointer;" id="hist-count" onclick="clearHistory()">ล้างประวัติ</span>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+        <table class="pool-table">
+          <thead class="t-head-dark"><tr><th style="width:30px;">#</th><th style="width:70px;">สุ่ม</th><th style="width:60px;">SSR</th><th style="width:65px;">SSR%</th><th>TOP ITEM</th><th style="width:55px;">PITY</th></tr></thead>
+          <tbody id="hist-tbody"><tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px;font-size:13px;">ยังไม่มีประวัติ</td></tr></tbody>
+        </table>
       </div>
     </div>
   </div>
-  <div class="input-row">
-    <label>จำนวน Monte Carlo Simulation</label>
-    <div class="num-stepper">
-      <button class="stepper-btn" onclick="stepVal('pov-sims',-500)">−</button>
-      <input type="number" id="pov-sims" value="2000" min="10" max="50000">
-      <button class="stepper-btn" onclick="stepVal('pov-sims',500)">＋</button>
-    </div>
-  </div>
 
-  <!-- Free Roll Rule -->
-  <div class="toggle-row" onclick="toggleFree()" style="margin-bottom:10px;">
-    <div><div class="toggle-info">🎁 Free Roll Rule</div><div class="toggle-sub">รับ Free Roll ตามจำนวน paid rolls</div></div>
-    <label class="tog" onclick="event.stopPropagation()"><input type="checkbox" id="free-toggle" onchange="toggleFree()"><span class="tslider"></span></label>
-  </div>
-  <div class="expand-box" id="free-expand">
-    <div class="grid2" style="margin-bottom:8px;">
-      <div class="input-row" style="margin-bottom:0;">
-        <label>ครบ X paid rolls</label>
+  <hr class="sep">
+
+  <!-- ══ PLAYER POV ══ -->
+  <div class="card">
+    <div class="card-title"><span class="card-title-left">👤 Player POV — Budget Inputs</span></div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div>
+        <label>งบเติมเงิน (บาท)</label>
         <div class="num-stepper">
-          <button class="stepper-btn" onclick="stepValCb('free-every',-1,updateFreeSync)">−</button>
-          <input type="number" id="free-every" value="10" min="1" oninput="updateFreeSync()">
-          <button class="stepper-btn" onclick="stepValCb('free-every',1,updateFreeSync)">＋</button>
+          <button class="stepper-btn" onclick="stepValCb('pov-budget',-500,recalcBD)">−</button>
+          <input type="number" id="pov-budget" value="3000" min="1" oninput="recalcBD()">
+          <button class="stepper-btn" onclick="stepValCb('pov-budget',500,recalcBD)">＋</button>
         </div>
       </div>
-      <div class="input-row" style="margin-bottom:0;">
-        <label>ได้ฟรี Y rolls</label>
+      <div>
+        <label>ราคาต่อ Roll (บาท)</label>
         <div class="num-stepper">
-          <button class="stepper-btn" onclick="stepValCb('free-count',-1,updateFreeSync)">−</button>
-          <input type="number" id="free-count" value="1" min="0" oninput="updateFreeSync()">
-          <button class="stepper-btn" onclick="stepValCb('free-count',1,updateFreeSync)">＋</button>
+          <button class="stepper-btn" onclick="stepValCb('pov-price',-5,recalcBD)">−</button>
+          <input type="number" id="pov-price" value="30" min="1" oninput="recalcBD()">
+          <button class="stepper-btn" onclick="stepValCb('pov-price',5,recalcBD)">＋</button>
         </div>
       </div>
     </div>
-    <div class="expand-note">ทุก <span id="free-x-lbl">10</span> paid rolls → ได้ฟรี <span id="free-y-lbl">1</span> rolls (Free rolls ไม่สร้าง free rolls เพิ่ม)</div>
+    <div style="margin-bottom:14px;">
+      <label>จำนวน Monte Carlo Simulation</label>
+      <div class="num-stepper">
+        <button class="stepper-btn" onclick="stepVal('pov-sims',-500)">−</button>
+        <input type="number" id="pov-sims" value="2000" min="10" max="50000">
+        <button class="stepper-btn" onclick="stepVal('pov-sims',500)">＋</button>
+      </div>
+    </div>
+    <!-- Free Roll Rule -->
+    <div class="free-toggle-row">
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text);">🎁 Free Roll Rule</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:1px;">รับ Free Roll ตามจำนวน paid rolls</div>
+      </div>
+      <label class="toggle"><input type="checkbox" id="free-toggle" onchange="toggleFree()" checked><span class="toggle-slider"></span></label>
+    </div>
+    <div class="free-expand show" id="free-expand">
+      <div class="grid2" style="margin-bottom:8px;">
+        <div>
+          <label>ครบ X Paid Rolls</label>
+          <div class="num-stepper">
+            <button class="stepper-btn" onclick="stepValCb('free-every',-1,updateFreeSync)">−</button>
+            <input type="number" id="free-every" value="10" min="1" oninput="updateFreeSync()">
+            <button class="stepper-btn" onclick="stepValCb('free-every',1,updateFreeSync)">＋</button>
+          </div>
+        </div>
+        <div>
+          <label>ได้ฟรี Y Rolls</label>
+          <div class="num-stepper">
+            <button class="stepper-btn" onclick="stepValCb('free-count',-1,updateFreeSync)">−</button>
+            <input type="number" id="free-count" value="1" min="0" oninput="updateFreeSync()">
+            <button class="stepper-btn" onclick="stepValCb('free-count',1,updateFreeSync)">＋</button>
+          </div>
+        </div>
+      </div>
+      <div class="free-note">ทุก <span id="free-x-lbl">10</span> paid rolls → ได้ฟรี <span id="free-y-lbl">1</span> rolls (Free rolls ไม่สร้าง free rolls เพิ่ม)</div>
+    </div>
+    <!-- Breakdown -->
+    <div class="bd-boxes" id="bd-boxes">
+      <div class="bd-box"><div class="bd-val" id="bd-paid" style="color:var(--blue2);">100</div><div class="bd-lbl">Paid Rolls</div></div>
+      <div class="bd-box"><div class="bd-val" id="bd-free" style="color:var(--green);">0</div><div class="bd-lbl">Free Rolls</div></div>
+      <div class="bd-box" style="border-color:var(--gold-dim);background:rgba(232,200,74,.04);"><div class="bd-val" id="bd-total" style="color:var(--gold);">100</div><div class="bd-lbl">Total Rolls</div></div>
+    </div>
   </div>
 
-  <!-- Breakdown preview -->
-  <div class="bd-boxes" id="bd-boxes">
-    <div class="bd-box"><div class="bd-val" id="bd-paid" style="color:var(--blue2);">100</div><div class="bd-lbl">Paid Rolls</div></div>
-    <div class="bd-box"><div class="bd-val" id="bd-free" style="color:var(--green);">0</div><div class="bd-lbl">Free Rolls</div></div>
-    <div class="bd-box" style="border-color:var(--gold-dim);background:rgba(232,200,74,.04);"><div class="bd-val" id="bd-total" style="color:var(--gold);">100</div><div class="bd-lbl">Total Rolls</div></div>
+  <div id="pov-alert" class="alert"></div>
+  <div class="run-bar">
+    <button class="btn btn-gold btn-run" onclick="runPOV()" id="pov-btn">🎰 Run Monte Carlo Simulation</button>
+    <button class="btn btn-success" onclick="exportPOVSummaryCSV()">📊 Export Player POV Summary CSV</button>
   </div>
+  <div id="mc-progress" class="mc-progress" style="display:none;">
+    <div class="mc-progress-bar"><div class="mc-progress-fill" id="mc-fill" style="width:0%"></div></div>
+    <div class="mc-progress-text" id="mc-text">Simulating…</div>
+  </div>
+
+  <!-- POV RESULTS -->
+  <div id="pov-results" style="display:none;">
+    <div class="pov-big-grid">
+      <div class="pov-big"><div class="pov-big-val green" id="pov-pct-ssr">—</div><div class="pov-big-lbl">โอกาสได้ SSR ≥ 1</div><div class="pov-big-sub" id="pov-ge1-sub"></div></div>
+      <div class="pov-big"><div class="pov-big-val red" id="pov-pct-zero">—</div><div class="pov-big-lbl">โอกาส SSR = 0</div><div class="pov-big-sub" id="pov-zero-sub"></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="card-title-left">📋 Monte Carlo Summary</span></div>
+      <div id="mc-summary"></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="justify-content:space-between;"><span class="card-title-left">📊 SSR Distribution</span><span id="dist-sub" style="font-size:11px;color:var(--text3);font-weight:400;"></span></div>
+      <div id="pov-dist"></div>
+    </div>
+    <div class="insight-box" id="pov-insight"></div>
+  </div>
+
 </div>
-
-<div id="pov-alert" class="alert"></div>
-<div class="run-bar">
-  <button class="btn btn-gold btn-run" onclick="runPOV()" id="pov-btn">🎰 Run Monte Carlo Simulation</button>
-  <button class="btn btn-success" onclick="exportPOVSummaryCSV()">📊 Export Player POV Summary CSV</button>
-</div>
-<div id="mc-progress" class="mc-wrap" style="display:none;">
-  <div class="mc-bar-wrap"><div class="mc-bar" id="mc-fill" style="width:0%"></div></div>
-  <div class="mc-txt" id="mc-text">Simulating…</div>
-</div>
-
-<!-- POV RESULTS -->
-<div id="pov-results" style="display:none;">
-  <div class="pov-big-grid">
-    <div class="pov-big"><div class="pov-big-val green" id="pov-pct-ssr">—</div><div class="pov-big-lbl">โอกาสได้ SSR ≥ 1</div><div class="pov-big-sub" id="pov-ge1-sub"></div></div>
-    <div class="pov-big"><div class="pov-big-val red" id="pov-pct-zero">—</div><div class="pov-big-lbl">โอกาส SSR = 0</div><div class="pov-big-sub" id="pov-zero-sub"></div></div>
-  </div>
-
-  <!-- Monte Carlo Summary -->
-  <div class="card">
-    <div class="card-title"><span class="card-title-left">📋 Monte Carlo Summary</span></div>
-    <div id="mc-summary"></div>
-  </div>
-
-  <!-- SSR Distribution -->
-  <div class="card">
-    <div class="card-title"><span class="card-title-left">📊 SSR Distribution</span><span id="dist-sub" style="font-size:11px;color:var(--text3);font-weight:400;"></span></div>
-    <div id="pov-dist"></div>
-  </div>
-
-  <div class="insight-box" id="pov-insight"></div>
-</div>
-
-</div><!-- end .page -->
 
 <script>
 const RARITIES=['SSR','SR','R','N'];
 let itemPool=[],itemId=1,lastSim=[],lastPOV=null,simHistory=[];
 
-function defaultPool(){
-  return[
-    {id:itemId++,name:'Extreme Core Lv.12',rarity:'SSR'},
-    {id:itemId++,name:'Extreme Core Lv.11',rarity:'SR'},
-    {id:itemId++,name:'Extreme Core Lv.10',rarity:'R'},
-    {id:itemId++,name:'Silver Repair Kit',rarity:'N'}
-  ];
-}
+function defaultPool(){return[
+  {id:itemId++,name:'Extreme Core Lv.12',rarity:'SSR'},
+  {id:itemId++,name:'Extreme Core Lv.11',rarity:'SR'},
+  {id:itemId++,name:'Extreme Core Lv.10',rarity:'R'},
+  {id:itemId++,name:'Silver Repair Kit',rarity:'N'}
+];}
 itemPool=defaultPool();
 
-// ── UTILS ──
 const el=id=>document.getElementById(id);
 const v=id=>el(id).value;
 function sa(e,t,m){e.className='alert show alert-'+t;e.innerHTML=m;}
 function ha(e){e.className='alert';}
-function rarColor(r){return{SSR:'var(--ssrC)',SR:'var(--srC)',R:'var(--rC)',N:'var(--nC)'}[r]||'var(--nC)';}
+function rarColor(r){return{SSR:'var(--ssrColor)',SR:'var(--srColor)',R:'var(--rColor)',N:'var(--nColor)'}[r]||'var(--nColor)';}
 function rarBar(r){return{SSR:'bar-ssr',SR:'bar-sr',R:'bar-r',N:'bar-n'}[r]||'bar-n';}
 function dlCSV(rows,fn){
   const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
@@ -454,31 +591,34 @@ function dlCSV(rows,fn){
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
   a.download=fn;a.click();
 }
-function stepVal(id,d){
-  const e2=el(id);let val=parseFloat(e2.value)||0;
-  const mn=parseFloat(e2.min),mx=parseFloat(e2.max);
-  val+=d;if(!isNaN(mn))val=Math.max(mn,val);if(!isNaN(mx))val=Math.min(mx,val);
-  e2.value=val;e2.dispatchEvent(new Event('input'));
-}
-function stepValCb(id,d,cb){stepVal(id,d);cb&&cb();}
 function getRates(){return{SSR:+v('rate-ssr')||0,SR:+v('rate-sr')||0,R:+v('rate-r')||0,N:+v('rate-n')||0};}
 
-// ── RATE TOTAL ──
+function stepVal(id,d){
+  const e=el(id);let val=parseFloat(e.value)||0;
+  const mn=parseFloat(e.min),mx=parseFloat(e.max);
+  val+=d;if(!isNaN(mn))val=Math.max(mn,val);if(!isNaN(mx))val=Math.min(mx,val);
+  e.value=val;e.dispatchEvent(new Event('input'));
+}
+function stepValCb(id,d,cb){stepVal(id,d);cb&&cb();}
+function stepRate(id,d){stepVal(id,d);updateRateTotal();}
+
 function updateRateTotal(){
-  const r=getRates();const t=r.SSR+r.SR+r.R+r.N;const e2=el('rate-total');
-  if(Math.abs(t-100)<0.01){e2.className='rate-total ok';e2.textContent='✅ รวม: '+t.toFixed(2)+'%';}
-  else{e2.className='rate-total warn';e2.textContent='⚠️ รวม: '+t.toFixed(2)+'%';}
+  const r=getRates();const t=r.SSR+r.SR+r.R+r.N;const e=el('rate-total');
+  if(Math.abs(t-100)<0.01){e.className='rate-total ok';e.textContent='✅ รวม: '+t.toFixed(2)+'%';}
+  else{e.className='rate-total warn';e.textContent='⚠️ รวม: '+t.toFixed(2)+'%';}
 }
 
-// ── PITY ──
-function togglePity(){const on=el('pity-toggle').checked;el('pity-expand').classList.toggle('show',on);}
+function togglePity(){
+  const on=el('pity-toggle').checked;
+  el('pity-expand').classList.toggle('show',on);
+}
 function updatePityNote(){
-  const x=v('pity-count');el('pity-x-lbl').textContent=x;
+  const x=v('pity-count');
+  el('pity-x-lbl').textContent=x;
   el('pity-sub').textContent='รับประกัน SSR หากสุ่ม '+x+' ครั้งติดต่อกันไม่ได้ SSR';
   el('pity-note').innerHTML='🔒 ครั้งที่ <b>'+x+'</b> จะได้ SSR เสมอ หากยังไม่ได้ SSR ก่อนหน้า';
 }
 
-// ── FREE ROLL ──
 function toggleFree(){el('free-expand').classList.toggle('show',el('free-toggle').checked);recalcBD();}
 function updateFreeSync(){el('free-x-lbl').textContent=v('free-every');el('free-y-lbl').textContent=v('free-count');recalcBD();}
 function recalcBD(){
@@ -493,15 +633,11 @@ function recalcBD(){
   el('bd-total').textContent=total.toLocaleString();
 }
 
-// ── ITEM POOL ──
+// ── POOL ──
 function addItem(){
-  const name=el('add-name').value.trim();
-  const rarity=v('add-rarity');
-  if(!name){sa(el('pool-dup-alert'),'warn','⚠️ กรุณากรอกชื่อ item');return;}
-  itemPool.push({id:itemId++,name,rarity});
-  el('add-name').value='';
-  el('add-name').focus();
-  renderPool();
+  const name=el('add-name').value.trim();if(!name){sa(el('pool-dup-alert'),'warn','⚠️ กรุณากรอกชื่อ item');return;}
+  itemPool.push({id:itemId++,name,rarity:v('add-rarity')});
+  el('add-name').value='';el('add-name').focus();renderPool();
 }
 function removeItem(id){itemPool=itemPool.filter(i=>i.id!==id);renderPool();}
 function clearPool(){if(confirm('ล้าง item pool ทั้งหมด?')){itemPool=[];renderPool();}}
@@ -512,7 +648,7 @@ function checkDups(){
   const names=itemPool.map(i=>i.name.toLowerCase());
   const dups=itemPool.filter((item,idx)=>names.indexOf(item.name.toLowerCase())!==idx);
   const a=el('pool-dup-alert');
-  if(dups.length){const dn=[...new Set(dups.map(i=>i.name))].join(', ');sa(a,'warn','⚠️ ชื่อ item ซ้ำกัน: <b>'+dn+'</b> — กรุณาเปลี่ยนชื่อให้ไม่ซ้ำ');}
+  if(dups.length){const dn=[...new Set(dups.map(i=>i.name))].join(', ');sa(a,'warn','⚠️ ชื่อ item ซ้ำกัน: <b>'+dn+'</b>');}
   else ha(a);
   document.querySelectorAll('.pi-name').forEach(inp=>{
     const item=itemPool.find(i=>i.id===+inp.dataset.id);if(!item)return;
@@ -525,22 +661,23 @@ function renderPool(){
   if(!itemPool.length){tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:20px;">ยังไม่มี item — กรอกชื่อแล้วกด Add Item</td></tr>';el('pool-count').textContent='';return;}
   tbody.innerHTML=itemPool.map((item,i)=>`
     <tr>
-      <td class="c" style="color:var(--text3);font-size:12px;">${i}</td>
-      <td><span class="dot ${item.rarity}"></span><input class="pi-name" type="text" value="${item.name.replace(/"/g,'&quot;')}" data-id="${item.id}" style="width:100%;background:transparent;border:none;border-bottom:1px solid transparent;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:13px;padding:2px 4px;transition:border-color .15s;" onfocus="this.style.borderBottomColor='var(--gold)'" onblur="this.style.borderBottomColor='transparent';updateItemName(${item.id},this.value);if(!this.value.trim()){this.value='New Item';}" placeholder="ชื่อ item…"></td>
-      <td class="c"><select style="background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:12px;padding:4px 6px;cursor:pointer;width:90px;" onchange="updateItemRarity(${item.id},this.value)">${RARITIES.map(r=>`<option value="${r}"${r===item.rarity?' selected':''}>${r}</option>`).join('')}</select></td>
-      <td class="c"><button style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 6px;transition:color .15s;" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--text3)'" onclick="removeItem(${item.id})">✕</button></td>
+      <td style="color:var(--text3);text-align:center;font-size:12px;">${i}</td>
+      <td><span class="dot ${item.rarity}"></span><input class="pi-name" type="text" value="${item.name.replace(/"/g,'&quot;')}" data-id="${item.id}"
+        onchange="updateItemName(${item.id},this.value)"
+        onblur="if(!this.value.trim()){this.value='New Item';updateItemName(${item.id},'New Item');}"
+        placeholder="ชื่อ item…" style="width:calc(100% - 16px)"></td>
+      <td><select class="pi-rar" onchange="updateItemRarity(${item.id},this.value)">${RARITIES.map(r=>`<option value="${r}"${r===item.rarity?' selected':''}>${r}</option>`).join('')}</select></td>
+      <td><button class="pi-del" onclick="removeItem(${item.id})">✕</button></td>
     </tr>`).join('');
   const cnt={SSR:0,SR:0,R:0,N:0};itemPool.forEach(i=>cnt[i.rarity]++);
-  el('pool-count').innerHTML=`รวม ${itemPool.length} items — <span style="color:var(--ssrC)">SSR:${cnt.SSR}</span> / <span style="color:var(--srC)">SR:${cnt.SR}</span> / <span style="color:var(--rC)">R:${cnt.R}</span> / <span style="color:var(--nC)">N:${cnt.N}</span>`;
+  el('pool-count').innerHTML=`รวม ${itemPool.length} items — <span style="color:var(--ssrColor)">SSR:${cnt.SSR}</span> / <span style="color:var(--srColor)">SR:${cnt.SR}</span> / <span style="color:var(--rColor)">R:${cnt.R}</span> / <span style="color:var(--nColor)">N:${cnt.N}</span>`;
   checkDups();
 }
-
-// ── VALIDATE ──
 function validatePool(rates){
   const errs=[];
-  RARITIES.forEach(r=>{if(rates[r]>0&&!itemPool.some(i=>i.rarity===r))errs.push('Rarity '+r+' มี rate '+rates[r]+'% แต่ไม่มี item ใน pool');});
+  RARITIES.forEach(r=>{if(rates[r]>0&&!itemPool.some(i=>i.rarity===r))errs.push('Rarity '+r+' มี rate '+rates[r]+'% แต่ไม่มี item');});
   const names=itemPool.map(i=>i.name.toLowerCase());
-  if(names.some((n,i)=>names.indexOf(n)!==i))errs.push('มีชื่อ item ซ้ำกัน — กรุณาแก้ไขก่อน run');
+  if(names.some((n,i)=>names.indexOf(n)!==i))errs.push('มีชื่อ item ซ้ำกัน');
   return errs;
 }
 
@@ -578,86 +715,68 @@ function runSimulation(){
     results.push({roll:i+1,rarity:res.rarity,item:res.item.name,cost:price,pityAt:triggered?pt:null});
   }
   lastSim=results;
-  renderSimResults(counts,rates,rolls,price,rolls*price,itemCnt,pityOn,pityTriggers);
+  renderSimResults(counts,rates,rolls,price,rolls*price,itemCnt,pityOn,pityTriggers,results);
 }
 
-function renderSimResults(counts,rates,totalRolls,price,totalCost,itemCnt,pityOn,pityTriggers){
+function renderSimResults(counts,rates,totalRolls,price,totalCost,itemCnt,pityOn,pityTriggers,results){
   el('sim-results').style.display='block';
-
-  // Most common rarity
   const mostCommon=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+
+  // Result Cards
   const topEntry=Object.entries(itemCnt).sort((a,b)=>b[1]-a[1])[0];
   const topName=topEntry?topEntry[0].split('|')[0]:'—';
   const topRar=topEntry?topEntry[0].split('|')[1]:'N';
-
-  // Result Cards
   el('result-cards').innerHTML=`
-    <div class="rc"><div class="rc-val">${totalRolls.toLocaleString()}</div><div class="rc-lbl">Total Rolls</div></div>
-    <div class="rc"><div class="rc-val">${totalCost.toLocaleString()}</div><div class="rc-lbl">Total Cost (฿)</div></div>
-    <div class="rc hl"><div class="rc-val gold">${counts.SSR}</div><div class="rc-lbl">SSR Count</div></div>
-    <div class="rc"><div class="rc-val" style="font-size:16px;"><span class="rb ${mostCommon}">${mostCommon}</span></div><div class="rc-lbl">Most Common</div></div>`;
+    <div class="rc"><div class="rc-val">${totalRolls.toLocaleString()}</div><div class="rc-lbl">จำนวนรวม</div></div>
+    <div class="rc"><div class="rc-val">${totalCost.toLocaleString()}</div><div class="rc-lbl">ค่าใช้จ่าย</div></div>
+    <div class="rc hl"><div class="rc-val gold">${counts.SSR}</div><div class="rc-lbl">จำนวน SSR</div></div>
+    <div class="rc"><div class="rc-val" style="font-size:16px;padding-top:4px;"><span class="rb ${mostCommon}">${mostCommon}</span></div><div class="rc-lbl">หายากสูงสุด</div></div>
+    <div class="rc"><div class="rc-val" style="font-size:14px;padding-top:2px;color:${rarColor(topRar)};">${topName}</div><div class="rc-lbl">Top Item</div></div>`;
 
-  // Insight
-  const ssrExp=(rates.SSR/100)*totalRolls;
-  const pct=totalRolls?counts.SSR/totalRolls*100:0;
-  el('insight-box').innerHTML=`ตามอัตราดรอปได้ SSR <b>${counts.SSR}</b> ชิ้น (คาดไว้ <b>${ssrExp.toFixed(1)}</b> ชิ้น)`+
-    (pct<rates.SSR*0.5&&totalRolls>=50?`<div class="insight-warn-line">⚠️ โอกาสสูงถึง ${(100-pct).toFixed(1)}% ที่ผู้เล่นจะใช้งบหมดโดยไม่ได้ SSR ควรเพิ่ม Pity System หรือปรับอัตรา SSR</div>`:'');
+  // Insight — readable summary
+  const ssrExp=(rates.SSR/100)*totalRolls;const pct=totalRolls?counts.SSR/totalRolls*100:0;
+  const vsExp=counts.SSR>=ssrExp?`<span style="color:var(--green)">สูงกว่า</span>`:`<span style="color:var(--red)">ต่ำกว่า</span>`;
+  const avgRollsSSR=counts.SSR>0?Math.round(totalRolls/counts.SSR):null;
+  let insHtml=`
+    🎲 สุ่มทั้งหมด <b>${totalRolls.toLocaleString()}</b> ครั้ง ใช้งบ <b>${totalCost.toLocaleString()} บาท</b>
+    — ได้ SSR <b>${counts.SSR}</b> ชิ้น (${pct.toFixed(2)}%)
+    ${vsExp}ที่คาดไว้ <b>${ssrExp.toFixed(1)}</b> ชิ้น`;
+  if(avgRollsSSR) insHtml+=` · เฉลี่ย <b>${avgRollsSSR}</b> rolls/SSR`;
+  insHtml+=`<br>Top Item: <b style="color:${rarColor(topRar)};">${topName}</b> <span class="rb ${topRar}">${topRar}</span>`;
+  if(pct<rates.SSR*0.5&&totalRolls>=50) insHtml+=`<div class="insight-warn-line">⚠️ โอกาสสูงถึง ${(100-pct).toFixed(1)}% ที่ผู้เล่นจะใช้งบหมดโดยไม่ได้ SSR เลย ควรเพิ่ม Pity System หรือปรับอัตรา SSR</div>`;
+  el('insight-box').innerHTML=insHtml;
 
-  // Rarity Breakdown (inline graph)
+  // Graph
   const maxC=Math.max(...Object.values(counts),1);
-  el('sim-graph-inline').innerHTML=RARITIES.map(r=>`
+  el('sim-graph').innerHTML=RARITIES.map(r=>`
     <div class="g-row">
       <div class="g-lbl"><span class="rb ${r}">${r}</span></div>
-      <div class="g-wrap"><div class="g-bar ${rarBar(r)}" style="width:${counts[r]/maxC*100}%;">${counts[r]>maxC*0.12?counts[r].toLocaleString():''}</div></div>
+      <div class="g-wrap"><div class="g-bar ${rarBar(r)}" style="width:${counts[r]/maxC*100}%;">${counts[r]>maxC*.12?counts[r].toLocaleString():''}</div></div>
       <div class="g-num">${counts[r].toLocaleString()} (${totalRolls?(counts[r]/totalRolls*100).toFixed(1):'0.0'}%)</div>
     </div>`).join('');
 
-  // Cost Summary — compact, no empty space
-  const avgRollsPerSSR=counts.SSR>0?Math.round(totalRolls/counts.SSR):null;
-  const costPerSSR=counts.SSR>0?Math.round(totalCost/counts.SSR):null;
-  el('cost-summary-body').innerHTML=`
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
-      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">จำนวน Rolls</span>
-      <span style="font-size:14px;font-weight:700;">${totalRolls.toLocaleString()}</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
-      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">ราคาต่อครั้ง</span>
-      <span style="font-size:14px;font-weight:700;">${price.toLocaleString()} บาท</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
-      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">Avg Rolls / SSR</span>
-      <span style="font-size:14px;font-weight:700;color:var(--blue2);">${avgRollsPerSSR??'—'}</span>
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
-      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">ราคาเฉลี่ย / SSR</span>
-      <span style="font-size:14px;font-weight:700;color:var(--gold2);">${costPerSSR!=null?costPerSSR.toLocaleString()+' บาท':'—'}</span>
-    </div>
-    <div style="padding:14px;background:rgba(232,200,74,.06);border:1px solid var(--gold-dim);border-radius:var(--radius);text-align:center;">
-      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">ค่าใช้จ่ายรวม</div>
-      <div style="font-size:26px;font-weight:900;color:var(--gold2);">💰 ${totalCost.toLocaleString()} บาท</div>
-    </div>`;
+  // Cost Summary
+  const avgR=counts.SSR>0?Math.round(totalRolls/counts.SSR):null;
+  const costSSR=counts.SSR>0?Math.round(totalCost/counts.SSR):null;
+  el('cost-body').innerHTML=`
+    <div class="cost-kv"><span class="ck-l">จำนวน Rolls</span><span class="ck-v">${totalRolls.toLocaleString()}</span></div>
+    <div class="cost-kv"><span class="ck-l">ราคาต่อครั้ง</span><span class="ck-v">${price.toLocaleString()} บาท</span></div>
+    <div class="cost-kv"><span class="ck-l">Avg Rolls / SSR</span><span class="ck-v" style="color:var(--blue2);">${avgR??'—'}</span></div>
+    <div class="cost-kv"><span class="ck-l">ราคาเฉลี่ย / SSR</span><span class="ck-v" style="color:var(--gold2);">${costSSR!=null?costSSR.toLocaleString()+' บาท':'—'}</span></div>
+    <div class="cost-total"><div class="cost-total-lbl">ค่าใช้จ่ายรวม</div><div class="cost-total-val">💰 ${totalCost.toLocaleString()} บาท</div></div>`;
 
-  // Rate vs Actual — ไม่มี Count column ให้ดูสะอาด
-  el('result-tbody').innerHTML=RARITIES.map(r=>{
+  // RVA
+  el('rva-tbody').innerHTML=RARITIES.map(r=>{
     const set=rates[r];const act=totalRolls?counts[r]/totalRolls*100:0;const d=act-set;
     const cls=Math.abs(d)<0.5?'diff-zero':d>0?'diff-pos':'diff-neg';
-    return`<tr>
-      <td><span class="dot ${r}"></span><span class="rb ${r}">${r}</span></td>
-      <td class="r" style="color:var(--text2);">${set.toFixed(2)}%</td>
-      <td class="r">${act.toFixed(2)}%</td>
-      <td class="r ${cls}">${d>=0?'+':''}${d.toFixed(2)}%</td>
-    </tr>`;
+    return`<tr><td><span class="dot ${r}"></span><span class="rb ${r}">${r}</span></td><td>${set.toFixed(2)}%</td><td>${act.toFixed(2)}%</td><td class="${cls}">${d>=0?'+':''}${d.toFixed(2)}%</td></tr>`;
   }).join('');
 
-  // Item Result — ขยายตามเนื้อหา ไม่ fixed height
+  // Item Result
   const sorted=Object.entries(itemCnt).sort((a,b)=>b[1]-a[1]);
-  el('item-tbody').innerHTML=sorted.length?sorted.map(([k,c])=>{
+  el('ir-tbody').innerHTML=sorted.length?sorted.map(([k,c])=>{
     const[nm,rar]=k.split('|');
-    return`<tr>
-      <td><span class="dot ${rar}"></span>${nm}</td>
-      <td class="c"><span class="rb ${rar}">${rar}</span></td>
-      <td class="r" style="font-size:15px;font-weight:800;color:var(--text);">${c.toLocaleString()}</td>
-    </tr>`;
+    return`<tr><td><span class="dot ${rar}"></span>${nm}</td><td><span class="rb ${rar}">${rar}</span></td><td>${c.toLocaleString()}</td></tr>`;
   }).join(''):'<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:16px;">ไม่มีผล</td></tr>';
 
   // Pity
@@ -668,10 +787,38 @@ function renderSimResults(counts,rates,totalRolls,price,totalCost,itemCnt,pityOn
       <div style="text-align:center;padding:14px;background:rgba(46,204,113,.06);border:1px solid rgba(46,204,113,.25);border-radius:var(--radius);"><div style="font-size:28px;font-weight:900;color:var(--green);">${counts.SSR>0?Math.round(totalRolls/counts.SSR):'-'}</div><div style="font-size:10px;color:var(--text3);text-transform:uppercase;margin-top:2px;">Avg Rolls / SSR</div></div>
     </div>`;}
   else pc2.style.display='none';
+
+  // Roll Log (descending)
+  el('log-count').textContent='('+totalRolls.toLocaleString()+' ครั้ง)';
+  el('log-tbody').innerHTML=[...results].reverse().map(r=>`
+    <tr>
+      <td style="color:var(--text3);">${r.roll}</td>
+      <td><span class="rb ${r.rarity}">${r.rarity}</span>${r.pityAt?`<span class="pity-badge">PITY</span>`:''}</td>
+      <td><span class="dot ${r.rarity}"></span>${r.item}</td>
+      <td style="text-align:right;color:var(--text2);">${r.cost}</td>
+    </tr>`).join('');
+
+  // History
+  const ssrPct=totalRolls?counts.SSR/totalRolls*100:0;
+  simHistory.unshift({rolls:totalRolls,ssrCount:counts.SSR,ssrPct,topItem:topName,topItemRar:topRar,pityOn});
+  if(simHistory.length>20)simHistory.pop();
+  renderHistory();
 }
 
 function resetSim(){el('sim-results').style.display='none';lastSim=[];}
-
+function clearHistory(){simHistory=[];renderHistory();}
+function renderHistory(){
+  el('hist-count').textContent='('+simHistory.length+' ครั้งล่าสุด) — ล้างประวัติ';
+  el('hist-tbody').innerHTML=simHistory.length?simHistory.map((h,i)=>`
+    <tr>
+      <td style="color:var(--text3);">${i+1}</td>
+      <td><b>${h.rolls.toLocaleString()}</b></td>
+      <td style="font-weight:700;color:var(--ssrColor);">${h.ssrCount}</td>
+      <td>${h.ssrPct.toFixed(2)}%</td>
+      <td><span class="dot ${h.topItemRar}"></span>${h.topItem}</td>
+      <td><span style="font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:${h.pityOn?'rgba(74,158,255,.12)':'rgba(90,100,128,.1)'};color:${h.pityOn?'var(--blue2)':'var(--text3)'};border:1px solid ${h.pityOn?'rgba(74,158,255,.3)':'var(--border)'};">${h.pityOn?'เปิด':'ปิด'}</span></td>
+    </tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:var(--text3);padding:20px;font-size:13px;">ยังไม่มีประวัติ</td></tr>';
+}
 function exportLatestCSV(){
   if(!lastSim.length){alert('ยังไม่มีข้อมูล');return;}
   dlCSV([['Roll No.','Rarity','Item Name','Cost (THB)','Pity Trigger'],...lastSim.map(r=>[r.roll,r.rarity,r.item,r.cost,r.pityAt?'YES':''])],'gacha_latest_pull_'+Date.now()+'.csv');
@@ -693,9 +840,7 @@ async function runPOV(){
   const errs=validatePool(rates);if(errs.length){sa(alertEl,'err','❌ '+errs.join('<br>'));return;}
   ha(alertEl);
 
-  const paid=Math.floor(budget/price);
-  const free=fe>0&&fc>0?Math.floor(paid/fe)*fc:0;
-  const total=paid+free;
+  const paid=Math.floor(budget/price);const free=fe>0&&fc>0?Math.floor(paid/fe)*fc:0;const total=paid+free;
   if(total===0){sa(alertEl,'err','❌ งบน้อยเกินไป');return;}
 
   const pityOn=el('pity-toggle').checked;const pt=parseInt(v('pity-count'))||90;
@@ -705,7 +850,6 @@ async function runPOV(){
   const ibr=buildIBR();
   const ssrDist={};let totSSR=0,totSR=0,totR=0,totN=0,ssrGe1=0,best=0,worst=total;
   const BATCH=50;
-
   for(let b=0;b<sims;b+=BATCH){
     const end=Math.min(b+BATCH,sims);
     for(let s=b;s<end;s++){
@@ -727,8 +871,7 @@ async function runPOV(){
 
   lastPOV={budget,price,paidRolls:paid,freeRolls:free,totalRolls:total,sims,rates,freeEvery:fe,freeCount:fc,
     chanceGe1:ssrGe1/sims*100,chanceZero:(sims-ssrGe1)/sims*100,
-    avgSSR:totSSR/sims,avgSR:totSR/sims,avgR:totR/sims,avgN:totN/sims,
-    bestSSR:best,worstSSR:worst,ssrDist};
+    avgSSR:totSSR/sims,avgSR:totSR/sims,avgR:totR/sims,avgN:totN/sims,bestSSR:best,worstSSR:worst,ssrDist};
   renderPOV(lastPOV);
 }
 
@@ -739,7 +882,6 @@ function renderPOV(d){
   el('pov-ge1-sub').textContent=Math.round(d.chanceGe1/100*d.sims).toLocaleString()+' จาก '+d.sims.toLocaleString()+' การจำลอง';
   el('pov-zero-sub').textContent=Math.round(d.chanceZero/100*d.sims).toLocaleString()+' จาก '+d.sims.toLocaleString()+' การจำลอง';
 
-  // Monte Carlo Summary — paid rolls, free rolls, total rolls, chance >=1 SSR, chance 0 SSR, averages
   const freeRule=d.freeEvery>0?`ทุก ${d.freeEvery} paid → ฟรี ${d.freeCount}`:'ไม่มี';
   const rows=[
     ['งบประมาณ',d.budget.toLocaleString()+' บาท'],
@@ -751,32 +893,29 @@ function renderPOV(d){
     ['จำนวน Simulation',d.sims.toLocaleString()+' รอบ'],
     ['Chance ≥ 1 SSR',`<b style="color:var(--green)">${d.chanceGe1.toFixed(2)}%</b>`],
     ['Chance = 0 SSR',`<b style="color:var(--red)">${d.chanceZero.toFixed(2)}%</b>`],
-    ['Average SSR',`<b style="color:var(--ssrC)">${d.avgSSR.toFixed(3)}</b>`],
+    ['Average SSR',`<b style="color:var(--ssrColor)">${d.avgSSR.toFixed(3)}</b>`],
     ['Average SR',d.avgSR.toFixed(3)],
     ['Average R',d.avgR.toFixed(3)],
     ['Average N',d.avgN.toFixed(3)],
     ['Best Run (SSR)',`<b style="color:var(--green)">${d.bestSSR}</b>`],
     ['Worst Run (SSR)',`<b style="color:var(--red)">${d.worstSSR}</b>`],
   ];
-  el('mc-summary').innerHTML=rows.map(([k,val])=>`
-    <div class="summary-kv"><span class="sk">${k}</span><span class="sv">${val}</span></div>`).join('');
+  el('mc-summary').innerHTML=rows.map(([k,val])=>`<div class="mc-kv"><span class="mk">${k}</span><span class="mv">${val}</span></div>`).join('');
 
-  // SSR Distribution
   el('dist-sub').textContent='จากทุกการจำลอง';
   const maxBucket=Math.min(d.bestSSR,12);const maxC=Math.max(...Object.values(d.ssrDist));
   let ch='';
   for(let k=0;k<=maxBucket;k++){
     const cnt=d.ssrDist[k]||0;const pct=cnt/d.sims*100;
     const cls=k===0?'bar-red':k<=2?'bar-n':k<=4?'bar-r':'bar-ssr';
-    ch+=`<div class="g-row">
-      <div style="width:55px;text-align:right;font-size:12px;color:var(--text2);">${k}${k===maxBucket&&d.bestSSR>maxBucket?'+':''} SSR</div>
-      <div class="g-wrap"><div class="g-bar ${cls}" style="width:${maxC?cnt/maxC*100:0}%;min-width:${cnt>0?20:0}px;">${pct>5?pct.toFixed(1)+'%':''}</div></div>
-      <div class="g-num">${cnt.toLocaleString()} (${pct.toFixed(1)}%)</div>
+    ch+=`<div class="dist-row">
+      <div class="dist-lbl">${k}${k===maxBucket&&d.bestSSR>maxBucket?'+':''} SSR</div>
+      <div class="dist-wrap"><div class="dist-bar ${cls}" style="width:${maxC?cnt/maxC*100:0}%;min-width:${cnt>0?20:0}px;">${pct>5?pct.toFixed(1)+'%':''}</div></div>
+      <div class="dist-num">${cnt.toLocaleString()} (${pct.toFixed(1)}%)</div>
     </div>`;
   }
   el('pov-dist').innerHTML=ch;
 
-  // Insight
   const ic=d.chanceGe1>=70?'color:var(--green)':d.chanceGe1>=40?'color:var(--gold)':'color:var(--red)';
   const fb=d.freeRolls>0?`และ Free Rolls <b>${d.freeRolls.toLocaleString()}</b> ครั้ง `:'';
   el('pov-insight').innerHTML=`ด้วยงบ <b>${d.budget.toLocaleString()} บาท</b> ราคา <b>${d.price} บาท/roll</b> ได้ Paid Rolls <b>${d.paidRolls.toLocaleString()}</b> ครั้ง ${fb}รวม <b>${d.totalRolls.toLocaleString()}</b> ครั้ง — โอกาสได้ SSR ≥ 1 คือ <b style="${ic}">${d.chanceGe1.toFixed(1)}%</b>`+
@@ -789,7 +928,7 @@ function exportPOVSummaryCSV(){
   dlCSV([
     ['Field','Value'],
     ['Budget (THB)',d.budget],['Price/Roll',d.price],
-    ['Free Roll Rule',d.freeEvery>0?`Every ${d.freeEvery} paid → ${d.freeCount} free`:'None'],
+    ['Free Roll Rule',d.freeEvery>0?`Every ${d.freeEvery} paid = ${d.freeCount} free`:'None'],
     ['Paid Rolls',d.paidRolls],['Free Rolls',d.freeRolls],['Total Rolls',d.totalRolls],
     ['Simulations',d.sims],
     ['Chance >= 1 SSR %',d.chanceGe1.toFixed(4)],['Chance = 0 SSR %',d.chanceZero.toFixed(4)],
@@ -801,7 +940,7 @@ function exportPOVSummaryCSV(){
 }
 
 // ── INIT ──
-updateRateTotal();recalcBD();renderPool();
+updateRateTotal();updateFreeSync();recalcBD();renderPool();
 </script>
 </body>
 </html>
