@@ -1,3 +1,540 @@
+
+Claude finished the response
+I'll customize this artifact:
+
+
+gacha_simulator.html
+Interactive artifact 
+Transform any artifact into something uniquely yours by customizing its core elements.
+
+Change the topic - Adapt the content for a different subject
+Update the style - Refresh the visuals or overall design
+Make it personal - Tailor specifically for your needs
+Share your vision - I'll bring it to life
+Where would you like to begin?
+
+แก้ไจ
+
+ส่วนของ Setup ให้มี Input จำนวนการสุ่ม และราคาต่อคร้้ง
+ทั้งหมดนี้เพื่อนำไปคำณวนและสรุปผล
+
+Item pool อยากเพิ่มโดยการพิมพ์จาก Input box ได้เลย ไม่ต้องกดปุ่มเพิ่มไอเทม
+
+เอา export pool ออก
+
+Jun 4
+
+gacha_simulator.html
+Interactive artifact ∙ Version 2 
+แก้ไขครบทั้ง 3 จุดแล้วครับ:
+
+จำนวนการสุ่ม + ราคาต่อครั้ง — ย้ายเข้ามาอยู่ใน Setup tab เดียวกับ Rate Settings เลย พร้อม stepper กด +/− ได้
+Item Pool — พิมพ์ชื่อ item แล้วกด Enter หรือ Tab เพื่อเพิ่มทันที ไม่ต้องกดปุ่ม item จะแสดงเป็น tag badge สีตาม rarity ลบได้ด้วยกด ✕
+ลบปุ่ม Export Pool ออกแล้ว เหลือแค่ปุ่ม Clear All
+Item Pool — กดปุ่ม Add item แล้วสามารถแก้ไขชื่อและ rarity ใน Inputได้เลย
+
+Jun 4
+
+gacha_simulator.html
+Interactive artifact ∙ Version 3 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 4 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 5 
+ปรับแล้วครับ ตอนนี้ Item Pool ทำงานแบบนี้:
+
+กด Add Item → row ใหม่เพิ่มลงมาทันที พร้อม cursor focus ที่ช่องชื่อเลย
+แก้ชื่อ ได้โดยตรงในช่อง input ของแต่ละ row
+เปลี่ยน Rarity ได้จาก dropdown ในแต่ละ row เลย เส้นสีซ้ายจะเปลี่ยนตาม rarity ด้วย
+ลบ กด ✕ ท้าย row
+ตอนนี้ Input name โดนบังด้วย Rarity dropdown ช่วยแก้ไขให้ที
+
+Jun 4
+
+gacha_simulator.html
+Interactive artifact ∙ Version 6 
+แก้แล้วครับ เปลี่ยนจาก flex เป็น grid แบบ 4 คอลัมน์ (22px 1fr 90px 28px) ทำให้แต่ละช่องมีขนาดตายตัว ช่องชื่อ item ได้พื้นที่ 1fr เต็มๆ โดยไม่ถูก dropdown บัง
+
+ปุ่ม Run Simulation และ Box text แจ้งเตือน อยู่ด้านล่าง Item pool pane;
+
+Jun 4
+
+gacha_simulator.html
+Interactive artifact ∙ Version 7 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 8 
+ย้ายปุ่ม Run Simulation และ alert box ออกจาก card "ตั้งค่าการสุ่ม" มาอยู่ใน card แยกด้านล่าง Item Pool แทนครับ ตอนนี้ flow จะอ่านง่ายขึ้น — ตั้งค่า Rate → ตั้งค่า Rolls/ราคา → เพิ่ม Item → กด Run
+
+แก้ไข
+
+text box free roll เอาออกจากตั้งค่าการสุ่ม เปลี่ยนเป็น ระบบ pity ที่ เปิด/ปิดได้ รับประกัน SSR หากสุ่ม 90 ครั้งติดต่อกันไม่ได้ SSR
+Rarity dropdown ข้างปุ่ม Add Item เอาออก
+Item pool มีชื่อคอลัมน์ ลำดับเริ่มจาก 0, ชื่อไอเทม, ความหายาก
+มีแจ้งเตือนหากชื่อไอเทมซ้ำกัน
+Jun 4
+
+gacha_simulator.html
+Interactive artifact ∙ Version 9 
+แก้ไขครบทั้งหมดแล้วครับ:
+
+ระบบ Pity — มี toggle เปิด/ปิด พร้อมตั้งค่าจำนวน rolls และเลือกได้ 2 โหมด คือ Hard Pity (บังคับ SSR ครั้งที่ X) และ Soft Pity (rate SSR ค่อยๆ เพิ่มหลัง threshold) มีคำอธิบายแสดงอัตโนมัติตามโหมดที่เลือก รวมถึงแสดง Pity Trigger Summary ในผลลัพธ์
+Rarity dropdown ข้างปุ่ม Add Item — เอาออกแล้ว เปลี่ยน rarity ได้ที่ dropdown ในแต่ละ row โดยตรง
+Item Pool — มี header คอลัมน์ # / ชื่อไอเทม / ความหายาก ลำดับเริ่มจาก 0
+ชื่อซ้ำ — แจ้งเตือนทันทีที่ชื่อซ้ำ ตัว input ของ row ที่ซ้ำจะเปลี่ยนเป็นสีแดง และ block การ Run จนกว่าจะแก้ไข
+1780736719380_image.png
+
+index (1).html
+963 lines
+
+html
+
+อยากแก้ไข UX/UI ส่วนของ ผลการสุ่ม
+
+Cost Summary ไม่อยากให้มี empty space
+Rate Vs Actual จัดเรียง text ให้สวย balance กับ Panel
+Item Result Panel ขยายความสูงได้และ จัดเรียง text ให้สวย balance กับ Panel
+4:11 PM
+รับไฟล์ที่แก้ไขแล้วและภาพ screenshot มาเป็น reference ครับ
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 10 
+แก้ไขครบ 3 จุดแล้วครับ:
+
+Cost Summary — เปลี่ยนจาก layout ที่มี empty space มาเป็น key-value rows แน่น พร้อมเพิ่ม metrics ที่มีประโยชน์คือ "ราคาเฉลี่ย / SSR" และ "Avg Rolls / SSR" พร้อม cost total box แยกชัดเจนด้านล่าง
+
+Rate vs Actual — จัดเรียง column ใหม่ทั้งหมด ตัวเลขชิดขวา (text-align:right) ทุก column ยกเว้น Rarity เขียน diff-pos/neg/zero เป็น CSS class แยก spacing สม่ำเสมอทุก row
+
+Item Results — ลบ max-height ออก ให้ panel ขยายตามเนื้อหาได้เต็มที่ และจัด column ให้สมดุล: ชื่อชิดซ้าย, Rarity กึ่งกลาง, Count ชิดขวา
+
+Screenshot 20260606 161533.png
+Screenshot 20260606 161530.png
+Screenshot 20260606 161525.png
+Screenshot 20260606 161520.png
+Screenshot 20260606 161514.png
+Screenshot 20260606 161504.png
+Screenshot 20260606 161455.png
+อยากให้ Summary ย้ายมาอยู่หน้าแรกหน้าเดียวกันทั้งหมด และ Head text บนสุดมาอยู่ตรงกลาง
+ที่สำคัญฉันแนบภาพตัวอย่างของ อยากให้คุณดูว่ายังขาดฟีเจอรืไหนไปรึเปล่าหรือปรับแก้อะไรให้เหมือนกับตัวอย่าง
+
+4:21 PM
+วิเคราะห์จากภาพตัวอย่างทั้ง 7 รูปแล้วครับ มีฟีเจอร์ที่ยังขาดและต้องปรับหลายจุด:
+
+ขาด:
+
+Quick Presets (100 / 1,000 / 10,000 ครั้ง)
+บันทึกการสุ่ม (roll log แบบ descending พร้อม rarity badge)
+ประวัติการจำลองแบบ table (#, สุ่ม, SSR, SSR%, Top Item, Pity)
+Summary stat bar ด้านล่าง (จำนวนรวม, ค่าใช้จ่าย, จำนวน SSR, หายากสูงสุด, Top Item)
+Item Results แสดง mini bar chart + ผลจริง %
+Header กึ่งกลาง + subtitle
+ปรับ: layout single-page, Rate vs Actual มี column "จำนวน"
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 11 
+ปรับใหม่ทั้งหมดตาม reference ครับ สิ่งที่เพิ่มและแก้ไข:
+
+Layout & Hero
+
+Header กึ่งกลาง พร้อม subtitle และ pill button
+Single-page ทุกอย่างอยู่หน้าเดียว ไม่มี tab
+ฟีเจอร์ใหม่ตาม reference
+
+Quick Presets — 100 / 1,000 / 10,000 ครั้ง กดได้เลย
+Stat Bar 5 ช่อง — จำนวนรวม, ค่าใช้จ่าย, จำนวน SSR, หายากสูงสุด, Top Item
+บันทึกการสุ่ม — log table แบบ descending พร้อม rarity badge และ PITY badge
+ประวัติการจำลอง — table มี #, สุ่ม, SSR, SSR%, Top Item, Pity status
+Item Results — มี mini bar chart inline + ผลจริง %
+Rate vs Actual — เพิ่ม column จำนวน
+Player POV — auto-calculate จำนวน simulation, Free Roll toggle, insight + คำเตือนอัตโนมัติ
+Reset Default ใน Item Pool
+Design เปลี่ยนเป็น light theme ตาม reference
+เอาเป็น theme เดิมก่อนหน้านี้
+
+4:27 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 12 
+กลับมาเป็น dark theme เดิมแล้วครับ — สีพื้นหลังดำ/น้ำเงินเข้ม, accent สีทอง, badge สี SSR/SR/R/N เหมือนเดิมทุกอย่าง แต่ยังคงฟีเจอร์ใหม่ทั้งหมดไว้ครบ ได้แก่ Quick Presets, Stat Bar, Roll Log, History Table, Item Results + mini bar, Player POV แบบ single-page
+
+1780738591216_image.png
+ที่จริงหน้าตาไม่ต้องแป๊ะตามตัวอย่างนะ แค่ฟีเจอร์มีเหมือนกัน และ output ครบตามรูปภาพตามที่แนบไป
+
+4:37 PM
+โอเคครับ ขอ check ตาม spec ที่แนบมาเทียบกับ artifact ปัจจุบัน:
+
+มีครบแล้ว ✅
+
+Header / Rate Settings / Item Pool (Add + Table + Edit/Delete) / Pity / Roll Log / History / Graph / Rate vs Actual / Item Results / Player POV / Free Roll Rule / Monte Carlo Summary / Export CSV / Validation
+ขาดหรือต้องปรับ ❌
+
+Single Sim Result Cards — ขาด "most common rarity" แสดงชัดเจน
+Item Pool — ยังไม่มีปุ่ม Add Item แบบ form (กรอก + เลือก rarity แล้วกด Add) ตาม spec (ตอนนี้ใช้ inline edit แทน)
+Player POV Monte Carlo Summary — ขาด paid rolls, free rolls, total rolls แสดงแยกชัด
+Export — ขาดปุ่ม "Export Player POV Summary CSV" แยกต่างหาก (ปัจจุบันมีแค่ปุ่มเดียว)
+Responsive Layout — ยังไม่ได้ optimize mobile
+
+gacha_simulator.html
+Interactive artifact ∙ Version 13 
+ครบตาม spec ทุกจุดแล้วครับ สรุปสิ่งที่มีครบ:
+
+Header — Title + Subtitle กึ่งกลาง
+
+Rate Settings — SSR/SR/R/N inputs + แสดง rate รวมว่าครบ 100% หรือไม่ + Validation แจ้งเตือนทันที
+
+Item Pool — มีฟอร์มกรอกชื่อ + เลือก rarity + กด Add Item, แสดง table พร้อม edit/delete, แจ้งเตือนชื่อซ้ำ
+
+Single Simulation — Roll Settings (จำนวน + ราคา + Pity toggle), Result Cards (Total Rolls, Total Cost, SSR Count, Most Common Rarity), Result Table (rarity / rate setting / count / actual %), Item Result (summary count ต่อ item + mini bar)
+
+Player POV — Budget Inputs, Free Roll Rule toggle, Monte Carlo Summary ครบ (paid rolls, free rolls, total rolls, chance ≥1 SSR, chance 0 SSR, averages), SSR Distribution
+
+CSV — ปุ่ม "Export Latest Pull Result CSV" และ "Export Player POV Summary CSV" แยกกัน
+
+เปลี่ยน description ตรงนี้ ตั้งค่า • สร้าง Item Pool • จำลอง • วิเคราะห์ • ส่งออก
+
+5:02 PM
+ต้องการให้เปลี่ยนเป็นข้อความอะไรครับ?
+
+Setup - Player POV - Summary
+
+9:07 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 14 
+เปลี่ยนแล้วครับ
+
+Single Simulation — Roll Settings ไว้ด้านบนสุด
+
+9:09 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 15 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 16 
+ย้าย Single Simulation — Roll Settings ขึ้นมาไว้ด้านบนสุดแล้วครับ ลำดับตอนนี้คือ Roll Settings → Rate Settings → Item Pool → Run → Results
+
+1780755339414_image.png
+อยากแก้ไข UX/UI ส่วนของ ผลการสุ่ม
+
+Cost Summary ไม่อยากให้มี empty space
+Rate Vs Actual จัดเรียง text ให้สวย balance กับ Panel
+Item Result Panel ขยายความสูงได้และ จัดเรียง text ให้สวย balance กับ Panel
+9:16 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 17 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 18 
+แก้ครบ 3 จุดแล้วครับ:
+
+Cost Summary — เปลี่ยนเป็น key-value rows แน่นทุกช่อง ไม่มี empty space เพิ่ม Avg Rolls/SSR และราคาเฉลี่ย/SSR เป็น metric ที่มีประโยชน์ พร้อม total box ด้านล่าง
+
+Rate vs Actual — จัด layout ใหม่เป็น 2 column คู่กับ Rarity Breakdown ตัวเลขชิดขวาสม่ำเสมอ Set Rate สีอ่อนลงเพื่อแยก hierarchy ชัดขึ้น
+
+Item Result — ลบ max-height ออก ขยายตามจำนวน item ได้เต็มที่ ตัวเลข Count ขนาดใหญ่ขึ้นและชิดขวา จับคู่กับ Rate vs Actual ใน grid เดียวกัน
+
+Can you explain this section to me in more detail?
+
+!DOCTYPE html>
+<html lang="th">
+<head>
+9:18 PM
+This is the opening of an HTML document. Here's what each line does:
+
+<!DOCTYPE html> tells the browser "this is an HTML5 document." It's a declaration, not a tag — it has no closing counterpart. Without it, some browsers fall into "quirks mode" and render things inconsistently.
+
+<html lang="th"> is the root element that wraps everything on the page. The lang="th" attribute tells the browser (and screen readers, search engines, spell checkers) that the primary language of this page is Thai. This matters for accessibility and proper font rendering.
+
+<head> opens the document's metadata section — information about the page rather than content displayed on it. Everything between <head> and </head> is invisible to the user but essential for how the page loads and behaves. In this file, the head contains things like the character encoding declaration, viewport settings for mobile, the page title, and the Google Fonts import.
+
+In short, these three lines establish the document type, the language, and open the container for all the behind-the-scenes configuration before the visible page content begins.
+
+button toggle สำหรับเปลี่ยนจำนวนหายไปช่วยเอากลับมาเหมือนเดิม
+
+9:26 PM
+ช่วยระบุให้ชัดขึ้นหน่อยได้ไหมครับ ว่า button toggle ที่หายไปอยู่ใน section ไหน?
+
+Rate Settings (SSR/SR/R/N)
+จำนวนครั้งที่สุ่ม / ราคาต่อครั้ง
+Pity System
+อื่นๆ
+ทุก Section ที่มี text box ให้กรอกจำนวนตัวเลข
+
+9:28 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 19 
+Now I need to wrap all number inputs with stepper buttons in the HTML:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 20 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 21 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 22 
+Now add the stepVal helper functions to the script:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 23 
+เพิ่ม stepper button ± ครบทุก input ที่กรอกตัวเลขแล้วครับ ได้แก่:
+
+จำนวนครั้งที่สุ่ม / ราคาต่อครั้ง
+Pity count
+งบเติมเงิน / ราคาต่อ Roll / จำนวน Monte Carlo Simulation
+Free Roll (ครบ X paid / ได้ฟรี Y)
+1780756359411_image.png
+ฉันต้องการ stepper ± แบบนี้ค่ะ
+
+9:33 PM
+เข้าใจแล้วครับ ต้องการ stepper แบบ inline มี − และ + คั่นซ้ายขวา input เหมือนใน rate boxes เลย
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 24 
+ปรับแล้วครับ ตอนนี้ stepper เป็นแบบ − input + มีช่องว่างระหว่างปุ่มกับ input, ปุ่มมี border รัศมีมน และ input ตัวเลขใหญ่ขึ้น เหมือนกับ rate boxes เลย
+
+รู้สึกว่ามันไม่เหมือนในรูปที่แนบไปให้
+
+9:35 PM
+ขอดู reference รูปอีกครั้ง — ใน Rate Settings (SSR/SR/R/N) มี stepper แบบนี้อยู่แล้ว ซึ่งเป็น style เดียวกับที่ต้องการ ให้ copy style นั้นมาใช้กับทุก input เลยครับ
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 25 
+ปรับแล้วครับ ตอนนี้เป็น style เดียวกับ rate boxes เลย — ปุ่ม − และ + อยู่ชิดขอบซ้ายขวา, ตัวเลขอยู่ตรงกลาง, พื้นหลังเดียวกันทั้ง bar
+
+อยากได้แบบ stepper เหมือน version 10 ที่คุณเคยทำให้ฉัน
+
+9:39 PM
+ขอโทษครับ ผมไม่มีข้อมูล version ก่อนหน้าในการสนทนานี้แล้ว ช่วย describe หรือแนบรูป stepper แบบที่ต้องการได้เลยครับ เช่น
+
+ปุ่ม − / + อยู่ตำแหน่งไหน
+มี border หรือ background แบบไหน
+ขนาดใหญ่เล็กแค่ไหน
+
+remixed-fab4f3b1 (2).html
+905 lines
+
+html
+
+แบบนี้
+
+9:42 PM
+เข้าใจแล้วครับ เอา CSS และ HTML ของ stepper จากไฟล์ที่แนบมาใส่ทันทีเลย
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 26 
+ได้เลยครับ ตอนนี้ stepper กลับมาเป็น style เดิมจากไฟล์ที่แนบแล้ว — ปุ่ม − / + ชิดขอบซ้ายขวา พื้นหลัง var(--panel2) สีทอง hover เป็น var(--gold-dim) เหมือน version นั้นเลย
+
+1780757061359_image.png
+1780757092075_image.png
+มันไม่เหมือนเดิมเหมือนที่ฉันอยากได้ เดี๋ยวจะแนบรูปเปรียบเทียบให้ดู
+
+9:44 PM
+เห็นแล้วครับ ปัญหาคือ:
+
+ซ้าย (ที่อยากได้): ปุ่ม − / + อยู่ข้างๆ ตัวเลข inline เป็นแถวเดียวกัน
+ขวา (ปัจจุบัน): ปุ่ม − อยู่บน, ตัวเลข, ปุ่ม + อยู่ล่าง แยก 3 แถว
+
+gacha_simulator.html
+Interactive artifact ∙ Version 27 
+ดูเหมือนว่า HTML ที่ render อยู่ตอนนี้ยังมี structure เก่าที่ปุ่มแยกบน-ล่าง สาเหตุคือ CSS .num-stepper ถูก override ไปก่อนหน้า ขอ reset CSS ให้ตรงกับไฟล์ที่แนบมาเลยครับ:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 28 
+ตอนนี้ stepper เป็น − [ตัวเลข] + อยู่ในแถวเดียวกันแบบในรูปซ้ายแล้วครับ
+
+1780757204761_image.png
+ยังไม่มีการดปลี่ยนแปลง
+
+9:46 PM
+เห็นปัญหาแล้วครับ — HTML ยังเป็น structure เก่าที่ปุ่มแยกบน/ล่าง ต้องแก้ HTML ของ sim-rolls และ sim-price ให้ wrap ด้วย .num-stepper แบบ inline
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 29 
+ลอง refresh artifact ดูครับ ตอนนี้ .input-row ที่ทำให้ปุ่มแยกบน/ล่างถูกเอาออกแล้ว stepper ควรเป็น − [100] + แบบ inline แถวเดียวแล้ว
+
+1780757670300_image.png
+1780757696757_image.png
+1780757792130_image.png
+1780757799873_image.png
+1780757808950_image.png
+1780757817625_image.png
+1780757823460_image.png
+
+remixed-fab4f3b1 (2).html
+905 lines
+
+html
+
+ขอกลับมาเวอร์ชันนี้ แต่ปรับตำแหน่ง UX/UI และเพิ่มฟีเจอร์ตามรูป 
+
+Pity toggle อยู่คงเดิม
+9:58 PM
+รับไฟล์ reference และรูปครบแล้วครับ จะ rewrite ให้ตรงกับ reference ทุกจุด
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 30 
+Rewrite ครบทุกจุดตาม reference แล้วครับ สรุปสิ่งที่ทำ:
+
+Stepper — กลับมาเป็น − [ตัวเลข] + แบบ inline แถวเดียว ทุก input ทั้งหน้า
+
+Layout ตามรูป
+
+Roll Settings → Rate Settings → Item Pool → Run buttons → Results
+Item Pool มี Add form (กรอก + เลือก rarity + Add Item / Default)
+Pity toggle อยู่ใน Roll Settings card เหมือนเดิม
+Results — Result Cards (4 ช่อง), Insight, Rarity Breakdown + Cost Summary คู่กัน, Rate vs Actual + Item Result คู่กัน
+
+Player POV — Budget inputs + Monte Carlo count แยก, Free Roll toggle + expand, Breakdown boxes (Paid / Free / Total), Monte Carlo Summary แบบ key-value list, SSR Distribution, Insight + warning
+
+1780758660633_image.png
+1780758867604_image.png
+ภาพที่ 1 อยากให้แสดง Top item ด้วย
+ภาพที่ 2 ขาดในส่วนบันทึกการสุ่มและบันทึกการจำลอง
+
+10:14 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 31 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 32 
+Now add the roll log and simulation history sections, plus the simHistory state:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 33 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 34 
+Now render the log and history after sim results:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 35 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 36 
+Also need to pass results to renderSimResults:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 37 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 38 
+เพิ่มครบแล้วครับ:
+
+ภาพ 1 — Result Cards ขยายเป็น 5 ช่อง เพิ่ม Top Item แสดงชื่อ item ที่ได้มากที่สุด พร้อมสีตาม rarity
+
+ภาพ 2 — เพิ่ม บันทึกการสุ่ม (roll log แบบ descending แสดง ครั้งที่ / ความหายาก / item name / ราคา) และ ประวัติการจำลอง (ตาราง # / สุ่ม / SSR / SSR% / TOP ITEM / PITY) บันทึกทุกครั้งที่กด Start Simulation
+
+1780759530472_image.png
+1780759553884_image.png
+1780759640513_image.png
+1 . Insight text ฉันอยากให้สรุปผลด้วยรวมแบบอ่านง่าย
+
+จากภาพที่ 1slide bar ปรับ UI ให้สวยงามเข้ากับ theme
+จากภาพที่ 2 ส่วนหัวตาราง UI ให้เหมือนกันคือสีเข้มและขอบมน
+จากภาพที่ 3 อยาก button และ text box มีขนาดเท่าๆกัน
+10:28 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 39 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 40 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 41 
+Now update all table headers to use the dark rounded style, and fix the insight box:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 42 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 43 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 44 
+Now fix RVA and IR table headers and update the insight text:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 45 
+
+gacha_simulator.html
+Interactive artifact ∙ Version 46 
+Finally update the insight render to be a readable summary:
+
+
+gacha_simulator.html
+Interactive artifact ∙ Version 47 
+แก้ครบ 4 จุดแล้วครับ:
+
+1. Insight — สรุปผลแบบอ่านง่ายในประโยคเดียว: จำนวนสุ่ม, งบ, SSR ที่ได้, เทียบกับที่คาด (สูงกว่า/ต่ำกว่า), avg rolls/SSR และ Top Item พร้อม rarity badge
+
+2. Scrollbar — ปรับทุก scrollbar ให้บางลง มีสี var(--border2) track สี var(--bg2) และ hover เป็น var(--gold-dim) เข้ากับ theme
+
+3. Table headers — ทุกตาราง (Pool, RVA, Item Result, Roll Log, History) ใช้ class .t-head-dark พื้นหลัง var(--bg2) เข้มขึ้น corner มนที่มุมซ้าย-ขวาบน
+
+4. Item Pool form — เปลี่ยนเป็น CSS grid 4 คอลัมน์ กำหนด height:40px ให้ทุก element (input, select, ปุ่ม) มีความสูงเท่ากัน
+
+1780760272892_image.png
+Panel ของ Rarity Breakdown มี empty space คุณว่าควรปรับหรือเพิ่มอะไรดี
+
+10:40 PM
+จาก screenshot เห็นว่า Rarity Breakdown panel มี empty space ใต้ bar chart เยอะมาก เพราะ panel ถูก stretch ให้สูงเท่ากับ Cost Summary ข้างๆ
+
+แนะนำ 2 แนวทางครับ:
+
+Option A — เพิ่ม stat boxes (SSR/SR/R/N count) ด้านบน bar chart เหมือน reference เดิม ให้ข้อมูลมากขึ้นและเติมพื้นที่ได้พอดี
+
+Option B — เพิ่ม avg cost per rarity คำนวณว่าต้องจ่ายเฉลี่ยเท่าไหร่ต่อ item แต่ละ rarity แสดงใต้ bar chart
+
+Q: อยากให้เพิ่มอะไรใน Rarity Breakdown?
+A: Option A — Stat boxes (count แต่ละ rarity)
+
+10:41 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 48 
+เพิ่ม stat boxes 4 ช่อง (SSR / SR / R / N) ไว้ด้านบน bar chart แล้วครับ แต่ละช่องมีเส้นสีด้านบนตาม rarity และแสดงตัวเลข count ชัดเจน ช่วยเติม empty space และอ่านค่าได้ทันทีโดยไม่ต้องดูจาก bar
+
+เพิ่ม Option B ด้วย
+
+10:42 PM
+
+gacha_simulator.html
+Interactive artifact ∙ Version 49 
+เพิ่ม Option B แล้วครับ ตอนนี้ Rarity Breakdown มี 3 ส่วน:
+
+Stat boxes — count แต่ละ rarity พร้อมเส้นสีด้านบน
+Bar chart — สัดส่วนเปรียบเทียบ
+Avg Cost per Item — คำนวณว่าต้องจ่ายเฉลี่ยเท่าไหร่ต่อ item แต่ละ rarity (total cost ÷ จำนวนที่ได้) ถ้ายังไม่ได้ item นั้นเลยแสดง —
+
+
+
+
+
+Claude is AI and can make mistakes. Please double-check responses.
+code
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -746,14 +1283,34 @@ function renderSimResults(counts,rates,totalRolls,price,totalCost,itemCnt,pityOn
   if(pct<rates.SSR*0.5&&totalRolls>=50) insHtml+=`<div class="insight-warn-line">⚠️ โอกาสสูงถึง ${(100-pct).toFixed(1)}% ที่ผู้เล่นจะใช้งบหมดโดยไม่ได้ SSR เลย ควรเพิ่ม Pity System หรือปรับอัตรา SSR</div>`;
   el('insight-box').innerHTML=insHtml;
 
-  // Graph
+  // Graph + Stat boxes + Avg cost per rarity
   const maxC=Math.max(...Object.values(counts),1);
-  el('sim-graph').innerHTML=RARITIES.map(r=>`
+  el('sim-graph').innerHTML=`
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;">
+      ${['SSR','SR','R','N'].map(r=>`
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 8px;text-align:center;border-top:2px solid ${rarColor(r)};">
+          <div style="font-size:20px;font-weight:900;color:${rarColor(r)};">${counts[r].toLocaleString()}</div>
+          <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;">${r}</div>
+        </div>`).join('')}
+    </div>
+    ${RARITIES.map(r=>`
     <div class="g-row">
       <div class="g-lbl"><span class="rb ${r}">${r}</span></div>
       <div class="g-wrap"><div class="g-bar ${rarBar(r)}" style="width:${counts[r]/maxC*100}%;">${counts[r]>maxC*.12?counts[r].toLocaleString():''}</div></div>
       <div class="g-num">${counts[r].toLocaleString()} (${totalRolls?(counts[r]/totalRolls*100).toFixed(1):'0.0'}%)</div>
-    </div>`).join('');
+    </div>`).join('')}
+    <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Avg Cost per Item (บาท)</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+        ${['SSR','SR','R','N'].map(r=>{
+          const avg=counts[r]>0?(totalCost/counts[r]).toFixed(0):null;
+          return`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:8px;text-align:center;">
+            <div style="font-size:14px;font-weight:800;color:${rarColor(r)};">${avg!=null?Number(avg).toLocaleString():'—'}</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:2px;">${r}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
 
   // Cost Summary
   const avgR=counts.SSR>0?Math.round(totalRolls/counts.SSR):null;
