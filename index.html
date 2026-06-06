@@ -73,7 +73,7 @@
   .pi-name:focus{outline:none;border-bottom-color:var(--gold);}
   .pi-name:hover{border-bottom-color:var(--border2);}
   .pi-rar-cell{width:110px;}
-  .pi-rar{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:12px;padding:3px 5px;cursor:pointer;}
+  .pi-rar{width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'Noto Sans Thai',sans-serif;font-size:12px;padding:8px 5px;cursor:pointer;text-align: center;}
   .pi-rar:focus{outline:none;border-color:var(--gold);}
   .pi-del-cell{width:32px;text-align:center;}
   .pi-del{cursor:pointer;font-size:13px;color:var(--text3);background:none;border:none;padding:2px 4px;transition:color .15s;}
@@ -257,17 +257,17 @@ input[type="number"]{
       <div class="input-row">
         <label>จำนวนการสุ่ม (Rolls)</label>
         <div class="num-stepper">
-          <button class="stepper-btn" onclick="stepVal('sim-rolls',-10)">−</button>
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',-1)">−</button>
           <input type="number" id="sim-rolls" value="100" min="1">
-          <button class="stepper-btn" onclick="stepVal('sim-rolls',10)">＋</button>
+          <button class="stepper-btn" onclick="stepVal('sim-rolls',1)">＋</button>
         </div>
       </div>
       <div class="input-row" style="margin-bottom:0;">
         <label>ราคาต่อครั้ง (บาท)</label>
         <div class="num-stepper">
-          <button class="stepper-btn" onclick="stepVal('sim-price',-5)">−</button>
+          <button class="stepper-btn" onclick="stepVal('sim-price',-1)">−</button>
           <input type="number" id="sim-price" value="30" min="0">
-          <button class="stepper-btn" onclick="stepVal('sim-price',5)">＋</button>
+          <button class="stepper-btn" onclick="stepVal('sim-price',1)">＋</button>
         </div>
       </div>
 
@@ -284,23 +284,16 @@ input[type="number"]{
       <div class="pity-settings hidden" id="pity-settings">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
           <div style="flex:1;min-width:120px;">
-            <label>รับประกัน SSR ทุก X rolls</label>
+            <label>รับประกัน SSR ทุก <span id="label-pity-x">90</span> rolls</label>
             <div class="num-stepper">
               <button class="stepper-btn" onclick="stepVal('pity-count',-1)">−</button>
-              <input type="number" id="pity-count" value="90" min="1" max="999">
+              <input type="number" id="pity-count" value="90" min="1" max="999" oninput="updatePityNote()">
               <button class="stepper-btn" onclick="stepVal('pity-count',1)">＋</button>
             </div>
           </div>
-          <div style="flex:1;min-width:140px;">
-            <label>รูปแบบ Pity</label>
-            <select id="pity-mode" style="padding:9px 10px;">
-              <option value="hard">Hard Pity (บังคับ SSR)</option>
-              <option value="soft">Soft Pity (เพิ่ม rate)</option>
-            </select>
-          </div>
         </div>
         <p class="pity-note" id="pity-note">
-          🔒 <b>Hard Pity:</b> ถ้าสุ่ม <b id="pity-note-x">90</b> ครั้งติดต่อกันโดยไม่ได้ SSR ครั้งถัดไปจะได้ SSR เสมอ
+          🔒 ถ้าสุ่ม <b id="pity-note-x">90</b> ครั้งติดต่อกันโดยไม่ได้ SSR ครั้งถัดไปจะได้ SSR เสมอ
         </p>
       </div>
     </div>
@@ -401,7 +394,7 @@ input[type="number"]{
       <div class="card-title">🎁 Free Roll Rule</div>
       <div class="grid2">
         <div class="input-row">
-          <label>ครบ X paid rolls</label>
+          <label>ครบ <span id="label-free-x">10</span> paid rolls</label>
           <div class="num-stepper">
             <button class="stepper-btn" onclick="stepValCb('free-every',-1,updateFreeSync)">−</button>
             <input type="number" id="free-every" value="10" min="1" oninput="updateFreeSync()">
@@ -409,7 +402,7 @@ input[type="number"]{
           </div>
         </div>
         <div class="input-row">
-          <label>ได้ฟรี Y rolls</label>
+          <label>ได้ฟรี <span id="label-free-y">1</span> rolls</label>
           <div class="num-stepper">
             <button class="stepper-btn" onclick="stepValCb('free-count',-1,updateFreeSync)">−</button>
             <input type="number" id="free-count" value="1" min="0" oninput="updateFreeSync()">
@@ -516,6 +509,13 @@ input[type="number"]{
 <script>
 // ── STATE ──
 let itemPool = [], itemId = 1, lastSimResult = [], lastPlayerResult = null, simHistory = [];
+const defaultItems = [
+  { id: itemId++, name: 'Extreme Core Lv.12', rarity: 'SSR' },
+  { id: itemId++, name: 'Extreme Core Lv.11', rarity: 'SR' },
+  { id: itemId++, name: 'Extreme Core Lv.10', rarity: 'R' },
+  { id: itemId++, name: 'Silver Repair Kit', rarity: 'N' }
+];
+itemPool.push(...defaultItems);
 
 // ── TABS ──
 function switchTab(id, btn) {
@@ -549,14 +549,12 @@ function updatePityNote() {
   const x = document.getElementById('pity-count').value;
   const el = document.getElementById('pity-note-x');
   if (el) el.textContent = x;
-  const mode = document.getElementById('pity-mode').value;
+  const labelEl = document.getElementById('label-pity-x');
+  if (labelEl) labelEl.textContent = x;
   const noteEl = document.getElementById('pity-note');
-  if (mode === 'hard')
-    noteEl.innerHTML = `🔒 <b>Hard Pity:</b> ถ้าสุ่ม <b id="pity-note-x">${x}</b> ครั้งติดต่อกันโดยไม่ได้ SSR ครั้งถัดไปจะได้ SSR เสมอ`;
-  else
-    noteEl.innerHTML = `📈 <b>Soft Pity:</b> หลังจากสุ่มครบ <b id="pity-note-x">${x}</b> ครั้งโดยไม่ได้ SSR rate SSR จะค่อยๆ เพิ่มขึ้นทุก roll จนถึง 100% ที่ 2× threshold`;
+  noteEl.innerHTML = `🔒 <b>Hard Pity:</b> ถ้าสุ่ม <b id="pity-note-x">${x}</b> ครั้งติดต่อกันโดยไม่ได้ SSR ครั้งถัดไปจะได้ SSR เสมอ`;
 }
-document.addEventListener('input', e => { if (e.target.id === 'pity-count' || e.target.id === 'pity-mode') updatePityNote(); });
+document.addEventListener('input', e => { if (e.target.id === 'pity-count') updatePityNote(); });
 
 // ── RATES ──
 function getRates() {
@@ -663,18 +661,13 @@ function buildIBR() {
   return m;
 }
 
-function rollOnce(rates, ibr, pityCounter, pityOn, pityThreshold, pityMode) {
+function rollOnce(rates, ibr, pityCounter, pityOn, pityThreshold) {
   let rarity = 'N';
   if (pityOn && pityCounter >= pityThreshold) {
     rarity = 'SSR';
   } else {
-    let ssrRate = rates.SSR;
-    if (pityOn && pityMode === 'soft' && pityCounter >= pityThreshold) {
-      const over = pityCounter - pityThreshold;
-      ssrRate = Math.min(100, rates.SSR + over * (100 / pityThreshold));
-    }
     const r = Math.random() * 100; let cum = 0;
-    for (const [rar, rate] of [['SSR', ssrRate], ['SR', rates.SR], ['R', rates.R], ['N', rates.N]]) {
+    for (const [rar, rate] of [['SSR', rates.SSR], ['SR', rates.SR], ['R', rates.R], ['N', rates.N]]) {
       cum += rate;
       if (r < cum) { rarity = rar; break; }
     }
@@ -699,13 +692,12 @@ function runSimulation() {
 
   const pityOn        = document.getElementById('pity-toggle').checked;
   const pityThreshold = parseInt(document.getElementById('pity-count').value) || 90;
-  const pityMode      = document.getElementById('pity-mode').value;
   const ibr           = buildIBR();
   const results = []; const counts = {SSR:0,SR:0,R:0,N:0}; const itemCnt = {};
   let pityCounter = 0, pityTriggers = 0;
 
   for (let i = 0; i < rolls; i++) {
-    const res = rollOnce(rates, ibr, pityCounter, pityOn, pityThreshold, pityMode);
+    const res = rollOnce(rates, ibr, pityCounter, pityOn, pityThreshold);
     const triggered = pityOn && pityCounter >= pityThreshold;
     if (res.rarity === 'SSR') { pityCounter = 0; if (triggered) pityTriggers++; }
     else pityCounter++;
@@ -777,6 +769,8 @@ function updateFreeSync() {
   const y = document.getElementById('free-count').value;
   document.getElementById('free-preview-x').textContent = x;
   document.getElementById('free-preview-y').textContent = y;
+  document.getElementById('label-free-x').textContent = x;
+  document.getElementById('label-free-y').textContent = y;
   recalcBreakdown();
 }
 function recalcBreakdown() {
@@ -819,7 +813,6 @@ async function runPlayerPOV() {
   if (total===0) { showAlert(alertEl,'err','❌ งบน้อยเกินไป'); return; }
   const pityOn        = document.getElementById('pity-toggle').checked;
   const pityThreshold = parseInt(document.getElementById('pity-count').value)||90;
-  const pityMode      = document.getElementById('pity-mode').value;
   const btn = document.getElementById('pov-btn'); btn.disabled=true;
   const prog=document.getElementById('mc-progress'); prog.style.display='block';
   const fill=document.getElementById('mc-fill'); const txt=document.getElementById('mc-text');
@@ -831,7 +824,7 @@ async function runPlayerPOV() {
     for (let s=b;s<end;s++) {
       let sc=0,src=0,rc=0,nc=0,pc=0;
       for (let i=0;i<total;i++) {
-        const res=rollOnce(rates,ibr,pc,pityOn,pityThreshold,pityMode);
+        const res=rollOnce(rates,ibr,pc,pityOn,pityThreshold);
         if (res.rarity==='SSR'){sc++;pc=0;}else{src+=res.rarity==='SR'?1:0;rc+=res.rarity==='R'?1:0;nc+=res.rarity==='N'?1:0;pc++;}
       }
       totSSR+=sc;totSR+=src;totR+=rc;totN+=nc;
@@ -963,7 +956,7 @@ function showAlert(el,t,m){el.className='alert show alert-'+t;el.innerHTML=m;}
 function hideAlert(el){el.className='alert';}
 
 // ── INIT ──
-updateRateTotal(); updateFreeSync(); recalcBreakdown();
+updateRateTotal(); updateFreeSync(); recalcBreakdown(); updatePityNote(); renderPool();
 </script>
 </body>
 </html>
