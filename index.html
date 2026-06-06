@@ -1,3 +1,5 @@
+
+code
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -206,16 +208,22 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
 <div class="card">
   <div class="card-title"><span class="card-title-left">🎲 Single Simulation — Roll Settings</span></div>
   <div class="grid2">
-    <div class="input-row"><label>จำนวนครั้งที่สุ่ม</label><input type="number" id="sim-rolls" value="100" min="1"></div>
-    <div class="input-row"><label>ราคาต่อครั้ง (บาท)</label><input type="number" id="sim-price" value="30" min="0"></div>
-  </div>
-  <div class="toggle-row" onclick="togglePity()" style="margin-top:4px;">
-    <div><div class="toggle-info">🛡️ Pity System</div><div class="toggle-sub" id="pity-sub">รับประกัน SSR หากสุ่ม 90 ครั้งติดต่อกันไม่ได้ SSR</div></div>
-    <label class="tog" onclick="event.stopPropagation()"><input type="checkbox" id="pity-toggle" onchange="togglePity()"><span class="tslider"></span></label>
-  </div>
-  <div class="expand-box" id="pity-expand">
-    <div class="input-row" style="margin-bottom:0;"><label>รับประกัน SSR ทุก <span id="pity-x-lbl">90</span> ครั้ง</label><input type="number" id="pity-count" value="90" min="1" max="999" oninput="updatePityNote()"></div>
-    <div class="expand-note" id="pity-note">🔒 ครั้งที่ <b>90</b> จะได้ SSR เสมอ หากยังไม่ได้ SSR ก่อนหน้า</div>
+    <div class="input-row">
+      <label>จำนวนครั้งที่สุ่ม</label>
+      <div class="num-stepper">
+        <button class="stepper-btn" onclick="stepVal('sim-rolls',-1)">−</button>
+        <input type="number" id="sim-rolls" value="100" min="1">
+        <button class="stepper-btn" onclick="stepVal('sim-rolls',1)">＋</button>
+      </div>
+    </div>
+    <div class="input-row">
+      <label>ราคาต่อครั้ง (บาท)</label>
+      <div class="num-stepper">
+        <button class="stepper-btn" onclick="stepVal('sim-price',-1)">−</button>
+        <input type="number" id="sim-price" value="30" min="0">
+        <button class="stepper-btn" onclick="stepVal('sim-price',1)">＋</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -326,10 +334,31 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
 <div class="card">
   <div class="card-title"><span class="card-title-left">👤 Player POV — Budget Inputs</span></div>
   <div class="grid2">
-    <div class="input-row"><label>งบเติมเงิน (บาท)</label><input type="number" id="pov-budget" value="3000" min="1" oninput="recalcBD()"></div>
-    <div class="input-row"><label>ราคาต่อ Roll (บาท)</label><input type="number" id="pov-price" value="30" min="1" oninput="recalcBD()"></div>
+    <div class="input-row">
+      <label>งบเติมเงิน (บาท)</label>
+      <div class="num-stepper">
+        <button class="stepper-btn" onclick="stepValCb('pov-budget',-500,recalcBD)">−</button>
+        <input type="number" id="pov-budget" value="3000" min="1" oninput="recalcBD()">
+        <button class="stepper-btn" onclick="stepValCb('pov-budget',500,recalcBD)">＋</button>
+      </div>
+    </div>
+    <div class="input-row">
+      <label>ราคาต่อ Roll (บาท)</label>
+      <div class="num-stepper">
+        <button class="stepper-btn" onclick="stepValCb('pov-price',-5,recalcBD)">−</button>
+        <input type="number" id="pov-price" value="30" min="1" oninput="recalcBD()">
+        <button class="stepper-btn" onclick="stepValCb('pov-price',5,recalcBD)">＋</button>
+      </div>
+    </div>
   </div>
-  <div class="input-row"><label>จำนวน Monte Carlo Simulation</label><input type="number" id="pov-sims" value="2000" min="10" max="50000"></div>
+  <div class="input-row">
+    <label>จำนวน Monte Carlo Simulation</label>
+    <div class="num-stepper">
+      <button class="stepper-btn" onclick="stepVal('pov-sims',-500)">−</button>
+      <input type="number" id="pov-sims" value="2000" min="10" max="50000">
+      <button class="stepper-btn" onclick="stepVal('pov-sims',500)">＋</button>
+    </div>
+  </div>
 
   <!-- Free Roll Rule -->
   <div class="toggle-row" onclick="toggleFree()" style="margin-bottom:10px;">
@@ -338,8 +367,22 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
   </div>
   <div class="expand-box" id="free-expand">
     <div class="grid2" style="margin-bottom:8px;">
-      <div class="input-row" style="margin-bottom:0;"><label>ครบ X paid rolls</label><input type="number" id="free-every" value="10" min="1" oninput="updateFreeSync()"></div>
-      <div class="input-row" style="margin-bottom:0;"><label>ได้ฟรี Y rolls</label><input type="number" id="free-count" value="1" min="0" oninput="updateFreeSync()"></div>
+      <div class="input-row" style="margin-bottom:0;">
+        <label>ครบ X paid rolls</label>
+        <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepValCb('free-every',-1,updateFreeSync)">−</button>
+          <input type="number" id="free-every" value="10" min="1" oninput="updateFreeSync()">
+          <button class="stepper-btn" onclick="stepValCb('free-every',1,updateFreeSync)">＋</button>
+        </div>
+      </div>
+      <div class="input-row" style="margin-bottom:0;">
+        <label>ได้ฟรี Y rolls</label>
+        <div class="num-stepper">
+          <button class="stepper-btn" onclick="stepValCb('free-count',-1,updateFreeSync)">−</button>
+          <input type="number" id="free-count" value="1" min="0" oninput="updateFreeSync()">
+          <button class="stepper-btn" onclick="stepValCb('free-count',1,updateFreeSync)">＋</button>
+        </div>
+      </div>
     </div>
     <div class="expand-note">ทุก <span id="free-x-lbl">10</span> paid rolls → ได้ฟรี <span id="free-y-lbl">1</span> rolls (Free rolls ไม่สร้าง free rolls เพิ่ม)</div>
   </div>
@@ -413,6 +456,13 @@ function dlCSV(rows,fn){
   a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}));
   a.download=fn;a.click();
 }
+function stepVal(id,d){
+  const e2=el(id);let val=parseFloat(e2.value)||0;
+  const mn=parseFloat(e2.min),mx=parseFloat(e2.max);
+  val+=d;if(!isNaN(mn))val=Math.max(mn,val);if(!isNaN(mx))val=Math.min(mx,val);
+  e2.value=val;e2.dispatchEvent(new Event('input'));
+}
+function stepValCb(id,d,cb){stepVal(id,d);cb&&cb();}
 function getRates(){return{SSR:+v('rate-ssr')||0,SR:+v('rate-sr')||0,R:+v('rate-r')||0,N:+v('rate-n')||0};}
 
 // ── RATE TOTAL ──
