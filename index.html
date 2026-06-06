@@ -281,22 +281,32 @@ hr.sep{border:none;border-top:1px solid var(--border);margin:24px 0;}
   <div class="result-cards" id="result-cards"></div>
   <!-- Insight -->
   <div class="insight-box" id="insight-box"></div>
-  <!-- Result Table -->
-  <div class="card">
-    <div class="card-title"><span class="card-title-left">📊 Result Table</span></div>
-    <div class="tbl-wrap">
-      <table class="t">
-        <thead><tr><th>Rarity</th><th class="r">Rate Setting</th><th class="r">Count</th><th class="r">Actual %</th><th class="r">Diff</th></tr></thead>
+
+  <!-- Result row: Rarity Breakdown + Cost Summary -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;align-items:stretch;">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title"><span class="card-title-left">📊 Rarity Breakdown</span></div>
+      <div id="sim-graph-inline"></div>
+    </div>
+    <div class="card" style="margin-bottom:0;display:flex;flex-direction:column;">
+      <div class="card-title"><span class="card-title-left">💰 Cost Summary</span></div>
+      <div id="cost-summary-body" style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:center;"></div>
+    </div>
+  </div>
+
+  <!-- Result row: Rate vs Actual + Item Result -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;align-items:start;">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title"><span class="card-title-left">📈 Rate vs Actual</span></div>
+      <table class="t" style="width:100%;">
+        <thead><tr><th style="text-align:left;">Rarity</th><th class="r">Set Rate</th><th class="r">Actual</th><th class="r">Diff</th></tr></thead>
         <tbody id="result-tbody"></tbody>
       </table>
     </div>
-  </div>
-  <!-- Item Result -->
-  <div class="card">
-    <div class="card-title"><span class="card-title-left">🏆 Item Result</span></div>
-    <div class="tbl-wrap">
-      <table class="t">
-        <thead><tr><th>Item Name</th><th class="c">Rarity</th><th class="r">Count</th><th class="r">Actual %</th></tr></thead>
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title"><span class="card-title-left">🏆 Item Result</span></div>
+      <table class="t" style="width:100%;">
+        <thead><tr><th style="text-align:left;">Item</th><th class="c">Rarity</th><th class="r">Count</th></tr></thead>
         <tbody id="item-tbody"></tbody>
       </table>
     </div>
@@ -545,32 +555,62 @@ function renderSimResults(counts,rates,totalRolls,price,totalCost,itemCnt,pityOn
   el('insight-box').innerHTML=`ตามอัตราดรอปได้ SSR <b>${counts.SSR}</b> ชิ้น (คาดไว้ <b>${ssrExp.toFixed(1)}</b> ชิ้น)`+
     (pct<rates.SSR*0.5&&totalRolls>=50?`<div class="insight-warn-line">⚠️ โอกาสสูงถึง ${(100-pct).toFixed(1)}% ที่ผู้เล่นจะใช้งบหมดโดยไม่ได้ SSR ควรเพิ่ม Pity System หรือปรับอัตรา SSR</div>`:'');
 
-  // Result Table: rarity, rate setting, count, actual %
+  // Rarity Breakdown (inline graph)
   const maxC=Math.max(...Object.values(counts),1);
+  el('sim-graph-inline').innerHTML=RARITIES.map(r=>`
+    <div class="g-row">
+      <div class="g-lbl"><span class="rb ${r}">${r}</span></div>
+      <div class="g-wrap"><div class="g-bar ${rarBar(r)}" style="width:${counts[r]/maxC*100}%;">${counts[r]>maxC*0.12?counts[r].toLocaleString():''}</div></div>
+      <div class="g-num">${counts[r].toLocaleString()} (${totalRolls?(counts[r]/totalRolls*100).toFixed(1):'0.0'}%)</div>
+    </div>`).join('');
+
+  // Cost Summary — compact, no empty space
+  const avgRollsPerSSR=counts.SSR>0?Math.round(totalRolls/counts.SSR):null;
+  const costPerSSR=counts.SSR>0?Math.round(totalCost/counts.SSR):null;
+  el('cost-summary-body').innerHTML=`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
+      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">จำนวน Rolls</span>
+      <span style="font-size:14px;font-weight:700;">${totalRolls.toLocaleString()}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
+      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">ราคาต่อครั้ง</span>
+      <span style="font-size:14px;font-weight:700;">${price.toLocaleString()} บาท</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
+      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">Avg Rolls / SSR</span>
+      <span style="font-size:14px;font-weight:700;color:var(--blue2);">${avgRollsPerSSR??'—'}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);">
+      <span style="font-size:12px;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;">ราคาเฉลี่ย / SSR</span>
+      <span style="font-size:14px;font-weight:700;color:var(--gold2);">${costPerSSR!=null?costPerSSR.toLocaleString()+' บาท':'—'}</span>
+    </div>
+    <div style="padding:14px;background:rgba(232,200,74,.06);border:1px solid var(--gold-dim);border-radius:var(--radius);text-align:center;">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;">ค่าใช้จ่ายรวม</div>
+      <div style="font-size:26px;font-weight:900;color:var(--gold2);">💰 ${totalCost.toLocaleString()} บาท</div>
+    </div>`;
+
+  // Rate vs Actual — ไม่มี Count column ให้ดูสะอาด
   el('result-tbody').innerHTML=RARITIES.map(r=>{
     const set=rates[r];const act=totalRolls?counts[r]/totalRolls*100:0;const d=act-set;
     const cls=Math.abs(d)<0.5?'diff-zero':d>0?'diff-pos':'diff-neg';
     return`<tr>
       <td><span class="dot ${r}"></span><span class="rb ${r}">${r}</span></td>
-      <td class="r">${set}%</td>
-      <td class="r">${counts[r].toLocaleString()} <span class="mini-bar-wrap"><span class="mini-bar" style="width:${counts[r]/maxC*100}%;background:${rarColor(r)};"></span></span></td>
+      <td class="r" style="color:var(--text2);">${set.toFixed(2)}%</td>
       <td class="r">${act.toFixed(2)}%</td>
       <td class="r ${cls}">${d>=0?'+':''}${d.toFixed(2)}%</td>
     </tr>`;
   }).join('');
 
-  // Item Result
+  // Item Result — ขยายตามเนื้อหา ไม่ fixed height
   const sorted=Object.entries(itemCnt).sort((a,b)=>b[1]-a[1]);
-  const maxI=sorted.length?sorted[0][1]:1;
   el('item-tbody').innerHTML=sorted.length?sorted.map(([k,c])=>{
-    const[nm,rar]=k.split('|');const p2=totalRolls?c/totalRolls*100:0;
+    const[nm,rar]=k.split('|');
     return`<tr>
       <td><span class="dot ${rar}"></span>${nm}</td>
       <td class="c"><span class="rb ${rar}">${rar}</span></td>
-      <td class="r">${c.toLocaleString()} <span class="mini-bar-wrap"><span class="mini-bar" style="width:${c/maxI*100}%;background:${rarColor(rar)};"></span></span></td>
-      <td class="r">${p2.toFixed(2)}%</td>
+      <td class="r" style="font-size:15px;font-weight:800;color:var(--text);">${c.toLocaleString()}</td>
     </tr>`;
-  }).join(''):'<tr><td colspan="4" style="text-align:center;color:var(--text3);padding:16px;">ไม่มีผล</td></tr>';
+  }).join(''):'<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:16px;">ไม่มีผล</td></tr>';
 
   // Pity
   const pc2=el('pity-card');
